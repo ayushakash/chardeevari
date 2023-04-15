@@ -1,7 +1,8 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Container, Row, Col, Card, Button } from "react-bootstrap";
 import { addProduct, fetchProducts } from "../../Slices/Products/thunk";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../../Store/rootReducer";
 
 export type Product = {
   id: number;
@@ -18,17 +19,15 @@ type Props = {
   products: Array<any>;
 };
 
-const HomePage: React.FC<Props> = ({ products }) => {
-
-
-
-  useEffect(() => {
-    const products = dispatch(fetchProducts());
-    console.log(products);
-  }, []);
-
+const HomePage: React.FC<Props> = (props: any) => {
 
   const dispatch = useDispatch<any>();
+
+  useEffect(() => {
+    dispatch(fetchProducts());
+  }, [dispatch]);
+
+  const products = useSelector((state: RootState) => state.product.products);
 
 
 
@@ -40,7 +39,7 @@ const HomePage: React.FC<Props> = ({ products }) => {
   return (
     <Container className="my-3">
       <Row>
-        {products.map((product) => (
+        {products.map((product:any) => (
           <Col sm={6} md={4} lg={3} key={product.id}>
             <Card className="mb-3">
               <Card.Img variant="top" src={product.imageUrl} />

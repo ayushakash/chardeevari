@@ -15,7 +15,7 @@ const AppNavbar: React.FC<NavbarProps> = ({ brand, logoSrc, links }) => {
   return (
     <nav className="navbar navbar-expand-md navbar-dark bg-dark sticky-top">
       <div className="container-fluid">
-        <a className="navbar-brand" href="/">
+        <a className="navbar-brand" href="/Chardeevari.png">
           <img src={logoSrc} alt={brand} width="30" height="30" className="d-inline-block align-text-top me-2" />
           {brand}
         </a>
