@@ -1,6 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 require('dotenv').config();
+const multer = require('multer');
 
 const Product = require('../chardeevari-server/Models/productSchema'); // or import Product from './models/product';
 const cors = require('cors');
@@ -10,6 +11,10 @@ const cors = require('cors');
 
 const app = express();
 app.use(cors());
+app.use(express.json())
+
+app.use('/uploads', express.static('uploads'))
+
 console.log(process.env.MONGO_URI);
 // Connect to MongoDB
 mongoose
@@ -28,24 +33,57 @@ mongoose
 
 // Parse incoming JSON requests
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }))
+
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, 'uploads/') // path where files will be saved
+  },
+  filename: function (req, file, cb) {
+    cb(null, file.fieldname + '-' + Date.now() + "." + file.mimetype.split('/')[1]) // file name
+  }
+})
+
 
 // Create a new product
-app.post('/addproducts', async (req, res) => {
+// app.post('/api/products', async (req, res) => {
+//   console.log(req.body);
+//   console.log(req.file);
+//   try {
+//     // Create a new Product object using the request body
+//     const product = new Product(req.body);
+//     res.json(req.body)
+
+//     // Save the new product to the database
+//     // await product.save();
+
+//     // // Return a success message with the new product object
+//     // res.status(201).json(product);
+//   } catch (error) {
+//     console.error(error);
+//     res.status(500).send('Server Error');
+//   }
+// });
+
+const upload = multer({ storage: storage })
+
+app.post('/api/products', upload.single('image'), async (req, res) => {
+  console.log(req.body);
+  console.log(req.file);
   try {
-    console.log(req.body)
-    // Create a new Product object using the request body
+    res.json(req.body)
     const product = new Product(req.body);
+    product.image = req.file.filename
 
-    // Save the new product to the database
+    console.log("Product: ", product)
+
     await product.save();
-
-    // Return a success message with the new product object
-    res.status(201).json(product);
   } catch (error) {
-    // Return an error message if there was a problem creating the product
-    res.status(400).json({ error: error.message });
+    console.error(error);
+    res.status(500).send('Server Error');
   }
 });
+
 
 app.get('/products', async (req, res) => {
 
