@@ -9,6 +9,7 @@ import { productsData } from './Api/FakeData/productsData'
 import Counter from './Components/Counter';
 import ProductUploader from './Pages/Admin/ProductUploader';
 import ResponsiveDrawer from './Components/Drawer';
+import Footer from './Components/Footer';
 // require('dotenv').config();
 
 function App() {
@@ -17,11 +18,11 @@ function App() {
 
       <BrowserRouter>
         <AppNavbar brand={''} links={[]} logoSrc={'/Chardeevari.png'} />
-        <ResponsiveDrawer />
-        <Routes>
+        {/* <ResponsiveDrawer />*/}      <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/admin/upload-product" element={<ProductUploader />} />
         </Routes>
+        {/* <Footer /> */}
       </BrowserRouter>
     </>
   );

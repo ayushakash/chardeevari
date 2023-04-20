@@ -3,6 +3,10 @@ import { Container, Row, Col, Card, Button } from "react-bootstrap";
 import { addProduct, fetchProducts } from "../../Slices/Products/thunk";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../Store/rootReducer";
+import style from './Home.module.scss'
+import { Box, Rating } from "@mui/material";
+import StarIcon from '@mui/material/SvgIcon';
+
 
 export type Product = {
   id: number;
@@ -32,11 +36,21 @@ const HomePage: React.FC<any> = () => {
 
   const imageUrlPrefix = 'http://localhost:3001/uploads/';
 
-
-
   const handleAddToCart = (product: any) => {
-    dispatch(addProduct(product));
     console.log("add to cart");
+    dispatch(addProduct(product));
+  };
+
+  const [quantity, setQuantity] = useState(1);
+
+  const handleIncrement = () => {
+    setQuantity(quantity + 1);
+  };
+
+  const handleDecrement = () => {
+    if (quantity > 1) {
+      setQuantity(quantity - 1);
+    }
   };
 
   return (
@@ -44,16 +58,32 @@ const HomePage: React.FC<any> = () => {
       <Row>
         {products.map((product: any) => (
           <Col sm={6} md={4} lg={3} key={product.id}>
-            <Card className="mb-3">
+            <Card className="mb-2">
               <Card.Img variant="top" src={imageUrlPrefix + product.image} />
               <Card.Body>
-                <Card.Title>{product.productName}</Card.Title>
-                <Card.Text>Price: ${product.productPrice}</Card.Text>
-                <Card.Text>Category: {product.category}</Card.Text>
+                <div className={style.cardTitle}>{product.productName}</div>
+                <div className={style.subHeading}>Brand: {product.brand}</div>
+                <div className="d-flex">
+                  <div className="mt-1 ">Price: </div>
+                  <div className={style.cardTitle} style={{ "paddingLeft": "8px" }}>{product.productPrice}</div>
+                </div>
+                {/* <Card.Text>Category: {product.category}</Card.Text> */}
                 {/* <Card.Text>Subcategory: {product.description}</Card.Text> */}
-                <Card.Text>Rating: {product.rating}</Card.Text>
-                <Card.Text>Brand: {product.brand}</Card.Text>
-                <Button variant="primary" onClick={() => handleAddToCart({ ...product, quantity: 1 })}>Add to cart</Button>
+                <div className="d-flex justify-content-between ">
+                  <Rating className={'mt-1'}
+                    name="text-feedback"
+                    value={product.rating}
+                    readOnly
+                    precision={0.5}
+                    emptyIcon={<StarIcon style={{ opacity: 0.55 }} fontSize="inherit" />}
+                  />
+                  <div className="d-flex align-items-center">
+                    <Button variant="btn btn-outline-success mx-2" onClick={() => handleAddToCart({ ...product, quantity })}>Add </Button>
+                    <Button variant="btn btn-outline-success" onClick={handleIncrement}>+</Button>
+                    <div className="mx-2">{quantity}</div>
+                    <Button variant="btn btn-outline-success mx-2" onClick={handleDecrement}>-</Button>
+                  </div>
+                </div>
               </Card.Body>
             </Card>
           </Col>

@@ -3,7 +3,7 @@ import { RootState } from "../../Store/rootReducer";
 import {
   addProducts, getProducts
 } from "./reducers";
-import { Product } from "../../Pages/Home/Home";
+// import { Product } from "../../Pages/Home/Home";
 
 export const addProduct = (productData: any): ThunkAction<void, RootState, unknown, any> => async (dispatch) => {
   dispatch(addProducts(productData));
