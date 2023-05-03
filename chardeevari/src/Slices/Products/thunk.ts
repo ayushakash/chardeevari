@@ -1,7 +1,7 @@
 import { ThunkAction } from "@reduxjs/toolkit";
 import { RootState } from "../../Store/rootReducer";
 import {
-  addProducts, getProducts
+  addProducts, getProducts,getCartProducts
 } from "./reducers";
 // import { Product } from "../../Pages/Home/Home";
 
@@ -26,4 +26,10 @@ export const fetchProducts = () => {
   };
 };
 
+export const getCartproducts = (): ThunkAction<void, RootState, unknown, any> => async (dispatch) => {
+  const cartProducts:any = localStorage.getItem("cartProduct");
+
+  dispatch(getCartProducts(JSON.parse(cartProducts)))
+
+}
 

@@ -1,0 +1,39 @@
+.button {
+  display: flex;
+  font-weight: 600;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #0c831f;
+  width: 100%;
+  max-width: 250px; /* adjust as needed */
+  background-color: white;
+  font-family: okra;
+  font-size: 18px;
+  color: #0c831f;
+  border-radius: 8px;
+  height: 25%;
+  cursor: pointer;
+  padding: 0 2%; /* adjust as needed */
+}
+
+.counterButton {
+  display: flex;
+  font-weight: 600;
+  align-items: center;
+  justify-content: space-between;
+  border: 1px solid #0c831f;
+  width: 100%;
+  max-width: 250px; /* adjust as needed */
+  color: white;
+  font-family: okra;
+  font-size: 18px;
+  background-color: #0c831f;
+  border-radius: 8px;
+  height: 25%;
+  cursor: pointer;
+  padding: 0 2%; /* adjust as needed */
+}
+
+.operator {
+  padding: 0 3%; /* adjust as needed */
+}

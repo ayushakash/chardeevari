@@ -6,7 +6,9 @@ import { RootState } from "../../Store/rootReducer";
 import style from './Home.module.scss'
 import { Box, Rating } from "@mui/material";
 import StarIcon from '@mui/material/SvgIcon';
-
+import AddToCart from "../../Components/Button";
+import Footer from "../../Components/Footer";
+import SearchAppBar from "../../Components/SearchBar";
 
 export type Product = {
   id: number;
@@ -24,72 +26,81 @@ type Props = {
 };
 
 const HomePage: React.FC<any> = () => {
-
   const dispatch = useDispatch<any>();
+
+  const cartProducts = useSelector(
+    (state: RootState) => state.product.cartProducts
+  );
+  const handleProductAdditionCount = (cartProduct: any) => {
+    let updatedProducts = [];
+    const existingProduct = cartProducts.find(
+      (product) => product.id === cartProduct.id
+    );
+
+    if (existingProduct) {
+      const updatedProduct = {
+        ...existingProduct,
+        orderCount: cartProduct.orderCount,
+      };
+      updatedProducts.push(updatedProduct); //updating old product
+    } else {
+      updatedProducts.push(cartProduct); //adding new product
+    }
+    dispatch(addProduct(updatedProducts));
+  };
 
   useEffect(() => {
     dispatch(fetchProducts());
   }, [dispatch]);
 
   const products = useSelector((state: RootState) => state.product.products);
-  console.log(products);
-
-  const imageUrlPrefix = 'http://localhost:3001/uploads/';
-
+  const imageUrlPrefix = "http://localhost:3001/uploads/";
   const handleAddToCart = (product: any) => {
     console.log("add to cart");
-    dispatch(addProduct(product));
   };
 
   const [quantity, setQuantity] = useState(1);
 
-  const handleIncrement = () => {
-    setQuantity(quantity + 1);
-  };
-
-  const handleDecrement = () => {
-    if (quantity > 1) {
-      setQuantity(quantity - 1);
-    }
-  };
-
   return (
-    <Container className="my-3">
-      <Row>
-        {products.map((product: any) => (
-          <Col sm={6} md={4} lg={3} key={product.id}>
-            <Card className="mb-2">
-              <Card.Img variant="top" src={imageUrlPrefix + product.image} />
-              <Card.Body>
-                <div className={style.cardTitle}>{product.productName}</div>
-                <div className={style.subHeading}>Brand: {product.brand}</div>
-                <div className="d-flex">
-                  <div className="mt-1 ">Price: </div>
-                  <div className={style.cardTitle} style={{ "paddingLeft": "8px" }}>{product.productPrice}</div>
-                </div>
-                {/* <Card.Text>Category: {product.category}</Card.Text> */}
-                {/* <Card.Text>Subcategory: {product.description}</Card.Text> */}
-                <div className="d-flex justify-content-between ">
-                  <Rating className={'mt-1'}
-                    name="text-feedback"
-                    value={product.rating}
-                    readOnly
-                    precision={0.5}
-                    emptyIcon={<StarIcon style={{ opacity: 0.55 }} fontSize="inherit" />}
-                  />
-                  <div className="d-flex align-items-center">
-                    <Button variant="btn btn-outline-success mx-2" onClick={() => handleAddToCart({ ...product, quantity })}>Add </Button>
-                    <Button variant="btn btn-outline-success" onClick={handleIncrement}>+</Button>
-                    <div className="mx-2">{quantity}</div>
-                    <Button variant="btn btn-outline-success mx-2" onClick={handleDecrement}>-</Button>
+    <div style={{ minHeight: "100vh", position: "relative" }}>
+      <Container className="my-3">
+        <div style={{ position: "sticky", top: 0, zIndex: 1 }}>
+          
+        </div>
+        <Row>
+          {products.map((product: any) => (
+            <Col key={product.id} xs={6} sm={6} md={3}>
+              <Card className="mb-2 ">
+                <Card.Img variant="top" src={imageUrlPrefix + product.image} />
+                <Card.Body>
+                  <div className={style.cardTitle}>{product.productName}</div>
+                  <div className={style.subHeading}>Brand: {product.brand}</div>
+                  <div className="d-flex">
+                    <div className="mt-1 ">Price: </div>
+                    <div
+                      className={style.cardTitle}
+                      style={{ paddingLeft: "8px" }}
+                    >
+                      {product.productPrice}
+                    </div>
                   </div>
-                </div>
-              </Card.Body>
-            </Card>
-          </Col>
-        ))}
-      </Row>
-    </Container>
+                  <AddToCart
+                    count={handleProductAdditionCount}
+                    product={product}
+                  />
+                </Card.Body>
+              </Card>
+            </Col>
+          ))}
+          <div
+            className="d-md-none d-sm-block mb-2 px-2"
+            style={{ position: "fixed", bottom: 0 }}
+          >
+            <Footer />
+          </div>
+        </Row>
+      </Container>
+    </div>
   );
 };
 

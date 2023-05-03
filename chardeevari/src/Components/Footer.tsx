@@ -5,6 +5,7 @@ import FolderIcon from '@mui/icons-material/Folder';
 import RestoreIcon from '@mui/icons-material/Restore';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
+import { FaArrowRight, FaRegCalendarPlus } from 'react-icons/fa';
 
 export default function Footer() {
     const [value, setValue] = React.useState('recents');
@@ -14,28 +15,16 @@ export default function Footer() {
     };
 
     return (
-        <BottomNavigation sx={{ width: 500 }} value={value} onChange={handleChange}>
-            <BottomNavigationAction
-                label="Recents"
-                value="recents"
-                icon={<RestoreIcon />}
-            />
-            <BottomNavigationAction
-                label="Favorites"
-                value="favorites"
-                icon={<FavoriteIcon />}
-            />
-            <BottomNavigationAction
-                label="Nearby"
-                value="nearby"
-                icon={<LocationOnIcon />}
-            />
-            <BottomNavigationAction
-                label="Nearby"
-                value="nearby"
-                icon={<LocationOnIcon />}
-            />
-            <BottomNavigationAction label="Folder" value="folder" icon={<FolderIcon />} />
-        </BottomNavigation>
+            <div className="d-flex justify-content-between rounded-3 w-100 " style={{"backgroundColor" :"#0c831f","height":"60px"}}>
+                <div className = "d-flex flex-column px-3 text-white mt-2 ">
+                    <div style={{"fontSize": "0.9em"}}>5 items</div>
+                    <div>₹455</div>
+                </div>
+                <div className = "d-flex align-items-center px-2 text-white">
+                    <div><a className="nav-link" href="/cart">
+                    View Cart <FaArrowRight /> 
+              </a></div>
+                </div>
+                </div>
     );
 }

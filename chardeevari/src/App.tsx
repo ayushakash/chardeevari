@@ -10,19 +10,20 @@ import Counter from './Components/Counter';
 import ProductUploader from './Pages/Admin/ProductUploader';
 import ResponsiveDrawer from './Components/Drawer';
 import Footer from './Components/Footer';
+import Cart from "./Pages/Cart/Cart";
 // require('dotenv').config();
 
 function App() {
   return (
     <>
-
       <BrowserRouter>
-        <AppNavbar brand={''} links={[]} logoSrc={'/Chardeevari.png'} />
-        {/* <ResponsiveDrawer />*/}      <Routes>
+        <AppNavbar brand={""} links={[]} logoSrc={"/Chardeevari.png"} />
+        {/* <ResponsiveDrawer />*/}{" "}
+        <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/admin/upload-product" element={<ProductUploader />} />
+          <Route path="/cart" element={<Cart />} />
         </Routes>
-        {/* <Footer /> */}
       </BrowserRouter>
     </>
   );
