@@ -9,6 +9,7 @@ import StarIcon from '@mui/material/SvgIcon';
 import AddToCart from "../../Components/Button";
 import Footer from "../../Components/Footer";
 import SearchAppBar from "../../Components/SearchBar";
+import ResponsiveDrawer from "../../Components/Drawer";
 
 export type Product = {
   id: number;
@@ -25,8 +26,12 @@ type Props = {
   products: Array<any>;
 };
 
-const HomePage: React.FC<any> = () => {
+const HomePage: React.FC<any> = ({ searchString }) => {
   const dispatch = useDispatch<any>();
+  console.log("searchString", searchString);
+  useEffect(() => {
+    dispatch(fetchProducts());
+  }, [dispatch]);
 
   const cartProducts = useSelector(
     (state: RootState) => state.product.cartProducts
@@ -49,11 +54,16 @@ const HomePage: React.FC<any> = () => {
     dispatch(addProduct(updatedProducts));
   };
 
-  useEffect(() => {
-    dispatch(fetchProducts());
-  }, [dispatch]);
-
   const products = useSelector((state: RootState) => state.product.products);
+  let filteredProducts = products.filter((item: any) => {
+    return (
+      item.productName.toLowerCase().includes(searchString.toLowerCase()) ||
+      item.brand.toLowerCase().includes(searchString.toLowerCase())
+    );
+  });
+
+  console.log(filteredProducts);
+
   const imageUrlPrefix = "http://localhost:3001/uploads/";
   const handleAddToCart = (product: any) => {
     console.log("add to cart");
@@ -63,12 +73,11 @@ const HomePage: React.FC<any> = () => {
 
   return (
     <div style={{ minHeight: "100vh", position: "relative" }}>
+
       <Container className="my-3">
-        <div style={{ position: "sticky", top: 0, zIndex: 1 }}>
-          
-        </div>
+        <div style={{ position: "sticky", top: 0, zIndex: 1 }}></div>
         <Row>
-          {products.map((product: any) => (
+          {filteredProducts.map((product: any) => (
             <Col key={product.id} xs={6} sm={6} md={3}>
               <Card className="mb-2 ">
                 <Card.Img variant="top" src={imageUrlPrefix + product.image} />
