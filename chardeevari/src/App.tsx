@@ -1,6 +1,9 @@
 import React, { useState } from "react";
+
 import logo from "./logo.svg";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+
+
 import "./App.css";
 import AppNavbar from "./Components/Navbar";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -19,7 +22,7 @@ function App() {
 
   const searchBarfilter = (searchString: string) => {
     setSearchString(searchString);
-  };
+  }
   return (
     <>
       <BrowserRouter>
