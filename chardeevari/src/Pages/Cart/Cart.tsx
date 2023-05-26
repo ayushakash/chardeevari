@@ -7,10 +7,14 @@ import { Button, Card, Col, Row } from "react-bootstrap";
 import { Rating } from "@mui/material";
 import StarIcon from "@mui/material/SvgIcon";
 import AddToCart from "../../Components/Button";
+import { useNavigate } from 'react-router-dom';
+
 
 const Cart: React.FC<any> = () => {
   const dispatch = useDispatch<any>();
   const imageUrlPrefix = "http://localhost:3001/uploads/";
+
+  const navigate = useNavigate();
 
   const [selectedValue, setSelectedValue] = useState("1");
 
@@ -29,6 +33,11 @@ const Cart: React.FC<any> = () => {
         </button>
       </li>
     );
+  }
+
+  const onClickproceedToBuy = () =>{
+    navigate('/address')
+
   }
 
   const handleProductAdditionCount = (cartProduct: any) => {
@@ -105,20 +114,20 @@ const Cart: React.FC<any> = () => {
                         </div>
                       </Col>
                     </Row>
-                    <div className = "px-4 d-flex align-items-end">
+                    <div className = "px-4 d-flex align-items-end" style={{fontWeight:"500"}}>
                     Rs. {product.productPrice*product.orderCount}
                     </div>
                   </div>
                 </div>
               ))}
-              <div className="my-2 px-2 d-flex justify-content-end">
+              <div className="my-2 px-3 d-flex justify-content-end">
                 <h5>Subtotal ({calculateTotalCost().totalItem} {(calculateTotalCost().totalItem >1)? "items":"item" } ) :Rs {calculateTotalCost().totalCost} </h5>
               </div>
             </div>
           </div>
         </div>
-        <div className="col-lg-3 d-flex justify-content-center ">
-          <button className={style.buyButton}>Proceed to Buy ({calculateTotalCost().totalItem} {(calculateTotalCost().totalItem >1)? "items":"item" })</button>
+        <div className="col-lg-3 d-flex justify-content-center  ">
+          <button className={style.buyButton} onClick={onClickproceedToBuy} >Proceed to Buy ({calculateTotalCost().totalItem} {(calculateTotalCost().totalItem >1)? "items":"item" })</button>
 
         </div>
       </div>

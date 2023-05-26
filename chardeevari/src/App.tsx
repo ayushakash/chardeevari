@@ -1,10 +1,6 @@
 import React, { useState } from "react";
-
-import logo from "./logo.svg";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-
-
-import "./App.css";
+import { useMediaQuery } from "react-responsive";
 import AppNavbar from "./Components/Navbar";
 import "bootstrap/dist/css/bootstrap.min.css";
 import HomePage from "./Pages/Home/Home";
@@ -15,30 +11,54 @@ import ResponsiveDrawer from "./Components/Drawer";
 import Footer from "./Components/Footer";
 import Cart from "./Pages/Cart/Cart";
 import AdminPanel from "./Pages/Admin/AdminPanel";
-// require('dotenv').config();
+import Address from "./Pages/Checkout/Address";
+import Pnavbar from "./PwaComponents/index";
 
 function App() {
   const [searchString, setSearchString] = useState("");
+  const isSmallScreen = useMediaQuery({ maxWidth: 767 });
 
   const searchBarfilter = (searchString: string) => {
     setSearchString(searchString);
-  }
+  };
+
   return (
     <>
       <BrowserRouter>
-        <AppNavbar
-          brand={""}
-          links={[]}
-          logoSrc={"/Chardeevari.png"}
-          searchBarfilter={searchBarfilter}
-        />
-        {/* //display only to admin */}
-        <Routes>
-          <Route path="/" element={<HomePage searchString={searchString} />} />
-          <Route path="/admin/upload-product" element={<ProductUploader />} />
-          <Route path="/cart" element={<Cart />} />
-          <Route path="/admin" element={<AdminPanel />} />
-        </Routes>
+        {isSmallScreen ? (
+          <>
+            {/* <Pnavbar /> */}
+            <AppNavbar
+              brand={""}
+              links={[]}
+              logoSrc={"/Chardeevari.png"}
+              searchBarfilter={searchBarfilter}
+            />
+            <Routes>
+              <Route path="/" element={<HomePage searchString={searchString} />} />
+              <Route path="/admin/upload-product" element={<ProductUploader />} />
+              <Route path="/cart" element={<Cart />} />
+              <Route path="/admin" element={<AdminPanel />} />
+              <Route path="/address" element={<Address />} />
+            </Routes>
+          </>
+        ) : (
+          <>
+            <AppNavbar
+              brand={""}
+              links={[]}
+              logoSrc={"/Chardeevari.png"}
+              searchBarfilter={searchBarfilter}
+            />
+            <Routes>
+              <Route path="/" element={<HomePage searchString={searchString} />} />
+              <Route path="/admin/upload-product" element={<ProductUploader />} />
+              <Route path="/cart" element={<Cart />} />
+              <Route path="/admin" element={<AdminPanel />} />
+              <Route path="/address" element={<Address />} />
+            </Routes>
+          </>
+        )}
       </BrowserRouter>
     </>
   );

@@ -50,23 +50,8 @@ const ProductUploader: React.FC<ProductUploaderProps> = () => {
         formData.append('inventoryCount', productData.inventoryCount.toString());
         formData.append('image', selectedFile);
 
-        // for (let key of formData.entries()) {
-        //     console.log(key[0] + ": " + key[1])
-        // }
 
         try {
-            // Post product data to server
-            // let formDataObj: any = {}
-            // for (let key of formData.entries()) {
-            //     formDataObj[key[0]] = key[1]
-            // }
-            // console.log(formDataObj);
-
-            // const response = await fetch('http://localhost:3001/api/products', {
-            //     method: 'POST',
-            //     body: formData
-            // })
-
             const response = await axios.post('http://localhost:3001/api/products', formData, {
                 headers: {
                     "Content-Type": "multipart/form-data"
@@ -91,8 +76,6 @@ const ProductUploader: React.FC<ProductUploaderProps> = () => {
             console.error(error);
         }
     };
-
-
     return (
         <div className={style.productMain}>
             <div>

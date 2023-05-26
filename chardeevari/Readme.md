@@ -47,3 +47,15 @@ Merchant Sales Report: Use a scatter plot to show the relationship between a mer
 
 
 DASHBOARD LINKS https://www.behance.net/gallery/156753011/AtlasX-Sales-Dashboard
+
+
+//things to do
+address module 
+merchant onboarding form page
+login singnup jwt and also protected route
+database management i.e. schema design
+payment gateway
+admin panel according to the merchant 
+sms + email + seller 
+seller will have different module and also delivery as microservice which will have delivery order id will contain map 
+can select nearest store

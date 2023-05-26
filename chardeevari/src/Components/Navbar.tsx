@@ -26,13 +26,13 @@ const AppNavbar: React.FC<NavbarProps> = ({
       style={{ borderRadius: "15px" }}
     >
       <div className="container-fluid">
-        <Link to="/" className="navbar-brand">
+        <Link to="/" className="navbar-brand ">
           <img
             src={logoSrc}
             alt={brand}
             width="60"
             height="40"
-            className="d-inline-block align-text-top me-2"
+            className="d-inline-block align-text-top me-2 d-md-none"
           />
           {brand}
         </Link>
