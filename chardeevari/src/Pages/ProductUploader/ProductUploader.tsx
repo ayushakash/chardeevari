@@ -52,7 +52,7 @@ const ProductUploader: React.FC<ProductUploaderProps> = () => {
 
 
         try {
-            const response = await axios.post('http://localhost:3001/api/products', formData, {
+            const response = await axios.post('http://localhost:3001/products', formData, {
                 headers: {
                     "Content-Type": "multipart/form-data"
                 }
