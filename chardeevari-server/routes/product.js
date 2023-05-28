@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { getAllProducts,createProduct } = require('../controllers/product');
+const { getAllProducts,createProduct } = require('../controllers/product.controller.');
 const { upload } = require('../middlewares/multer');
 
 router.use(express.json());

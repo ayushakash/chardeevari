@@ -13,6 +13,7 @@ import Cart from "./Pages/Cart/Cart";
 import AdminPanel from "./Pages/Admin/AdminPanel";
 import Address from "./Pages/Checkout/Address";
 import Pnavbar from "./PwaComponents/index";
+import SignUpForm from "./Pages/Authentication/signup";
 
 function App() {
   const [searchString, setSearchString] = useState("");
@@ -25,7 +26,6 @@ function App() {
   return (
     <>
       <BrowserRouter>
-        {isSmallScreen ? (
           <>
             {/* <Pnavbar /> */}
             <AppNavbar
@@ -40,25 +40,11 @@ function App() {
               <Route path="/cart" element={<Cart />} />
               <Route path="/admin" element={<AdminPanel />} />
               <Route path="/address" element={<Address />} />
+              <Route path="/signup" element={<SignUpForm />} />
             </Routes>
           </>
-        ) : (
-          <>
-            <AppNavbar
-              brand={""}
-              links={[]}
-              logoSrc={"/Chardeevari.png"}
-              searchBarfilter={searchBarfilter}
-            />
-            <Routes>
-              <Route path="/" element={<HomePage searchString={searchString} />} />
-              <Route path="/admin/upload-product" element={<ProductUploader />} />
-              <Route path="/cart" element={<Cart />} />
-              <Route path="/admin" element={<AdminPanel />} />
-              <Route path="/address" element={<Address />} />
-            </Routes>
-          </>
-        )}
+        
+          
       </BrowserRouter>
     </>
   );
