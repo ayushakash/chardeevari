@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { FaRegCalendarPlus, FaShoppingCart } from "react-icons/fa";
+import { FaRegCalendarPlus, FaShoppingCart,FaUserAlt } from "react-icons/fa";
 import { fetchProducts } from "../Slices/Products/thunk";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
@@ -32,7 +32,7 @@ const AppNavbar: React.FC<NavbarProps> = ({
             alt={brand}
             width="60"
             height="40"
-            className="d-inline-block align-text-top me-2 d-md-none"
+            className="d-none d-md-inline-block align-text-top me-2"
           />
           {brand}
         </Link>
@@ -67,6 +67,16 @@ const AppNavbar: React.FC<NavbarProps> = ({
             <li className="nav-item">
               <Link to="/admin/upload-product" className="nav-link">
                 <FaRegCalendarPlus /> Add product
+              </Link>
+            </li>
+            <li className="nav-item">
+              <Link to="/signup" className="nav-link">
+                <FaUserAlt /> Signup
+              </Link>
+            </li>
+            <li className="nav-item">
+              <Link to="/login" className="nav-link">
+                <FaUserAlt /> login
               </Link>
             </li>
           </ul>

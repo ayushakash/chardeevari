@@ -3,6 +3,7 @@ const express = require('express');
 const cors = require('cors');
 const productRouter = require('./routes/product');
 const authRouter = require('./routes/auth');
+const addressRouter = require('./routes/address');
 require('dotenv').config();
 const  cookieParser = require('cookie-parser')
 
@@ -12,6 +13,14 @@ app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true })); 
 app.use('/uploads', express.static('uploads'));
+
+app.use((req, res, next) => {
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
+  res.setHeader("Access-Control-Allow-Headers", "Content-Type, auth-token");
+  res.setHeader("Access-Control-Expose-Headers", "auth-token");
+  next();
+});
 
 // Connect to MongoDB
 connectMongoDb(process.env.MONGO_URI).then(() => {
@@ -27,6 +36,7 @@ connectMongoDb(process.env.MONGO_URI).then(() => {
 // Routes
 app.use('/products', productRouter);
 app.use('/auth', authRouter);
+app.use('/address', addressRouter);
 
 
 // Start the server

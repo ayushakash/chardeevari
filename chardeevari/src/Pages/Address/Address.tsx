@@ -1,6 +1,4 @@
-import React from 'react'
 import AddressComponent from '../../Components/index';
-import style from './Checkout.module.scss'
 
 const Address = () => {
      

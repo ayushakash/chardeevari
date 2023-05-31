@@ -1,9 +1,7 @@
 const mongoose = require('mongoose');
-const OrderStatusEnum = {
-  PENDING: 0,
-  PROCESSING: 1,
-  COMPLETED: 2,
-  CANCELLED: 3,
+const AddressTypeEnum = {
+  billing: 0,
+  shipping: 1,
 };
 
 
@@ -26,7 +24,11 @@ const addressSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  street: {
+  address:{
+    type:String,
+    required: true,
+  },
+  streetAddress: {
     type: String,
     required: true,
   },
@@ -38,58 +40,22 @@ const addressSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  postalCode: {
-    type: String,
-    required: true,
-  },
-  country: {
+  pincode: {
     type: String,
     required: true,
   },
   phone: {
     type: String,
     required: true,
+  },
+  addressType:{
+    type: String,
+    enum: Object.values(AddressTypeEnum),
+    default: AddressTypeEnum.shipping,
+    required: true,
   }
 });
 
-
-// const productSchema = new mongoose.Schema({
-//   productId: {
-//     type: mongoose.Schema.Types.ObjectId,
-//     required: true,
-//   },
-//   name: {
-//     type: String,
-//     required: true,
-//   },
-//   price: {
-//     type: Number,
-//     required: true,
-//   },
-//   quantity: {
-//     type: Number,
-//     required: true,
-//   }
-// });
-
-const orderSchema = new mongoose.Schema({
-  orderNumber: {
-    type: String,
-    required: true,
-  },
-  totalAmount: {
-    type: Number,
-    required: true,
-  },
-  status: {
-    type: String,
-    enum: Object.values(OrderStatusEnum),
-    default: OrderStatusEnum.PENDING,
-    required: true,
-  },
-  products: {type:[cartItemSchema],
-  require:false}
-});
 
 const userSchema = new mongoose.Schema({
   name: {
@@ -108,21 +74,28 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-
-  address: {
-    type: [addressSchema],
+  gstNumber: {
+    type: String,
     required: false,
   },
-  cart:{ 
-    type:[cartItemSchema],
-    require:false,
-  },
-  orders: {
-    type: [orderSchema],
+  billingAddress: {
+    type: addressSchema,
     required: false,
-  }
+  },
+    shippingAddress: {
+    type: addressSchema,
+    required: false,
+  },
+  cart: {
+    type: [cartItemSchema],
+    require: false,
+  },
 });
 
 const User = mongoose.model('User', userSchema);
 
 module.exports = User;
+
+//add billing and shipping address
+//seperate order from user and also make it static in another table using the user id we will fetch the data
+//also the cart data should be seperate
