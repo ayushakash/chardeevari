@@ -1,4 +1,7 @@
 import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { updateAddress } from '../../Slices/User/thunk';
+import { useNavigate } from 'react-router-dom';
 
 type AddressType = 'billing' | 'shipping';
 
@@ -9,11 +12,13 @@ interface AddressData {
   city: string;
   state: string;
   pincode: string;
-  phoneNumber: string;
-  addressType: AddressType;
+  phone: string;
+  addressType: number;
 }
 
 const Addaddress: React.FC<any> = () => {
+  const dispatch = useDispatch<any>()
+  const navigate = useNavigate()
   const [addressData, setAddressData] = useState<AddressData>({
     name: '',
     address: '',
@@ -21,23 +26,27 @@ const Addaddress: React.FC<any> = () => {
     city: '',
     state: '',
     pincode: '',
-    phoneNumber: '',
-    addressType: 'shipping',
+    phone: '',
+    addressType: 1,
   });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
+    const updatedValue = name === 'addressType' ? parseInt(value, 10) : value;
     setAddressData((prevData) => ({
       ...prevData,
-      [name]: value,
+      [name]: updatedValue,
     }));
   };
 
+
+  
+
   const handleSubmit = () => {
-    //api to update user's address if he is loggedin
-    //if the person is logged in then only this page should open
-    //add as protected route
-    // onSubmit(addressData);
+        
+    dispatch(updateAddress(addressData))
+    navigate("/address")
+
   };
 
   return (
@@ -115,13 +124,13 @@ const Addaddress: React.FC<any> = () => {
       </div>
 
       <div className="mb-3">
-        <label htmlFor="phoneNumber" className="form-label">Phone Number:</label>
+        <label htmlFor="phone" className="form-label">Phone Number:</label>
         <input
           type="text"
-          id="phoneNumber"
+          id="phone"
           className="form-control"
-          name="phoneNumber"
-          value={addressData.phoneNumber}
+          name="phone"
+          value={addressData.phone}
           onChange={handleChange}
         />
       </div>
@@ -135,8 +144,8 @@ const Addaddress: React.FC<any> = () => {
           value={addressData.addressType}
           onChange={handleChange}
         >
-          <option value="billing">Billing</option>
-          <option value="shipping">Shipping</option>
+          <option value="0">Billing</option>
+          <option value="1">Shipping</option>
         </select>
       </div>
 

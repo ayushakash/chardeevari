@@ -3,7 +3,7 @@ import style from './Common.module.scss'
 import buttonStyle from "../Pages/Cart/Cart.module.scss";
 
 interface Address {
-  id: string;
+  _id: string;
   name: string;
   address: string;
   streetAddress: string;
@@ -18,7 +18,7 @@ interface AddressComponentProps {
 }
 
 export const AddressComponent: React.FC<AddressComponentProps> = ({ addresses }) => {
-  const [selectedAddressId, setSelectedAddressId] = useState(addresses[0].id);
+  const [selectedAddressId, setSelectedAddressId] = useState(addresses[0]._id);
 
   const handleAddressClick = (id: string) => {
     console.log(id)
@@ -30,19 +30,19 @@ export const AddressComponent: React.FC<AddressComponentProps> = ({ addresses })
       {addresses.map((address) => (
         <div
           className="d-flex rounded align-items-center mt-2 bg-white  px-2 py-2"
-          key={address.id}
+          key={address._id}
           
         >
-          <div onClick={() => handleAddressClick(address.id)}>
+          <div onClick={() => handleAddressClick(address._id)}>
             <input
               type="radio"
-              checked={selectedAddressId === address.id}
+              checked={selectedAddressId === address._id}
               onChange={() => {}}
               className={style.customRadio}
             />
           </div>
           <div className="mx-2">
-            <div onClick={() => handleAddressClick(address.id)}>
+            <div onClick={() => handleAddressClick(address._id)}>
             <div><b>{address.name}</b></div>
             <div>{address.address}</div>
             <div>{address.streetAddress}</div>
@@ -50,7 +50,7 @@ export const AddressComponent: React.FC<AddressComponentProps> = ({ addresses })
             <div>{address.pincode}</div>
             <div>{address.phoneNumber}</div>
             </div>
-            {selectedAddressId === address.id && (
+            {selectedAddressId === address._id && (
               <div className='d-flex flex-column' style={{ marginTop: '10px' }}>
                 <button className={buttonStyle.buyButton}>Deliver to this Address</button>
                 <div className='d-flex justify-content-between'>

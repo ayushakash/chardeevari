@@ -1,50 +1,29 @@
-import AddressComponent from '../../Components/index';
+import { useNavigate } from "react-router-dom";
+import AddressComponent from "../../Components/index";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { getAddress } from "../../Slices/User/thunk";
+import { RootState } from "../../Store/rootReducer";
+import style from '../../Components/Common.module.scss'
 
 const Address = () => {
-     
-  const addresses = [
-    {
-      id:"1",
-      name: 'John Doe',
-      address: '123 Main St',
-      streetAddress: 'Apt 4B',
-      city: 'New York',
-      state: 'NY',
-      pincode: '12345',
-      phoneNumber: '555-1234',
-    },
-    {
-      id:"2",
-      name: 'John Doe',
-      address: '123 Main St',
-      streetAddress: 'Apt 4B',
-      city: 'New York',
-      state: 'NY',
-      pincode: '12345',
-      phoneNumber: '555-1234',
-    },
-    {
-      id:"3",
-      name: 'John Doe',
-      address: '123 Main St',
-      streetAddress: 'Apt 4B',
-      city: 'New York',
-      state: 'NY',
-      pincode: '12345',
-      phoneNumber: '555-1234',
-    },
-    // Add more address objects as needed
-    
-  ];
-  // {style.addressContainer}
+  const dispatch = useDispatch<any>();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    dispatch(getAddress());
+  },[]);
+   
+  const addresses = useSelector((state: RootState) => state.user.address);
   return (
     <>
-    <div className="mx-4">
-      <h3>Select Address to Deliver</h3>
-      <AddressComponent addresses={addresses} />
-    </div>
+      <div className="mx-4">
+        <h3>Select Address to Deliver</h3>
+        {(addresses.length) && <AddressComponent addresses={addresses} />}
+        <button className={style.editButton } onClick={() => navigate("/addAddress")}>Add Address</button>
+      </div>
     </>
-  )
-}
+  );
+};
 
-export default Address
+export default Address;

@@ -1,11 +1,12 @@
 class UserService {
-    addAddress(address:any,token:any) {
+    addAddress(address:any,token:any) {       
       return new Promise(async (resolve, reject) => {
         try {
-          const response = await fetch(`http://localhost:3001/address/${token}`, {
+          const response = await fetch(`http://localhost:3001/address/`, {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`, 
             },
             body: JSON.stringify(address),
           });
@@ -47,13 +48,14 @@ class UserService {
       });
     }
   
-    getAddress(userId:any) {
+    getAddress(token:any) {
       return new Promise(async (resolve, reject) => {
         try {
-          const response = await fetch(`http://localhost:3001/address/${userId}`, {
+          const response = await fetch(`http://localhost:3001/address/`, {
             method: "GET",
             headers: {
               "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`, 
             },
           });
   

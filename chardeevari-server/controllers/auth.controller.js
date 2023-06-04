@@ -33,9 +33,8 @@ const userLogin = async (req, res) => {
       // role:createdUser.role
     };
 
-    const token = jwt.sign(data, process.env.TOKEN_SECRET, {
-      expiresIn: "2h",
-    });
+    console.log(data);
+    const token = jwt.sign(JSON.stringify(data), process.env.TOKEN_SECRET);
 
     console.log("TOKEN", token);
     user.token = token;
@@ -56,6 +55,7 @@ const userLogin = async (req, res) => {
 };
 
 const userSignup = async (req, res) => {
+  console.log(req.body);
   try {
     const user = new User(req.body);
     console.log("User: ", user);
@@ -84,9 +84,7 @@ const userSignup = async (req, res) => {
         // role:createdUser.role
       };
 
-      const token = jwt.sign(data, process.env.TOKEN_SECRET, {
-        expiresIn: "2h",
-      });
+      const token = jwt.sign(data, process.env.TOKEN_SECRET);
       secretToken = token;
 
       createdUser.token = token;

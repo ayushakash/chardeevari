@@ -49,9 +49,8 @@ const addressSchema = new mongoose.Schema({
     required: true,
   },
   addressType:{
-    type: String,
-    enum: Object.values(AddressTypeEnum),
-    default: AddressTypeEnum.shipping,
+    type: Number,
+    default: 1,
     required: true,
   }
 });
@@ -78,12 +77,8 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: false,
   },
-  billingAddress: {
-    type: addressSchema,
-    required: false,
-  },
-    shippingAddress: {
-    type: addressSchema,
+  address: {
+    type: [addressSchema],
     required: false,
   },
   cart: {

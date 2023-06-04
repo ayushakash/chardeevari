@@ -3,17 +3,12 @@ const User = require("../Models/UserModel");
 
 const createAddress = async (req, res) => {
   try {
-    const { token } = req.params;
     const { name, address, streetAddress, city, state, pincode, phone, addressType } = req.body;
 
-    // Verify and decode the JWT token
-    const decodedToken = jwt.verify(token, process.env.TOKEN_SECRET);
-
-    // Extract the user ID from the decoded token
-    const userId = decodedToken._id;
+    const userId = req.userId;
 
     const user = await User.findById(userId);
-    if (!user) {
+    if (!user) {  
       return res.status(404).send("User not found");
     }
 
@@ -28,14 +23,8 @@ const createAddress = async (req, res) => {
       addressType,
     };
 
-    if (addressType === AddressTypeEnum.billing) {
-      user.billingAddress = newAddress;
-    } else {
-      user.shippingAddresses.push(newAddress);
-    }
-
+    user.address.push(newAddress);
     await user.save();
-
     res.status(201).json(user);
   } catch (error) {
     console.error("Error while creating address:", error);
@@ -93,29 +82,26 @@ const updateAddress = async (req, res) => {
 
 const getAddress = async (req, res) => {
   try {
-    const { userId, addressId } = req.params;
-
+    const userId = req.userId;
     const user = await User.findById(userId);
     if (!user) {
       return res.status(404).send("User not found");
     }
 
-    let address;
-    if (addressId === "billing") {
-      address = user.billingAddress;
-    } else {
-      address = user.shippingAddresses.find(address => address._id.toString() === addressId);
-      if (!address) {
-        return res.status(404).send("Address not found");
-      }
-    }
+    const addresses = user.address; // Get all addresses from the user object
 
-    res.status(200).json(address);
+    if (addresses.length === 0) {
+      return res.status(404).send("No addresses found");
+    }
+    console.log(addresses);
+
+    res.status(200).json(addresses);
   } catch (error) {
-    console.error("Error while getting address:", error);
-    res.status(500).send("Error while getting address. Please try again later.");
+    console.error("Error while getting addresses:", error);
+    res.status(500).send("Error while getting addresses. Please try again later.");
   }
 };
+
 
 const deleteAddress = async (req, res) => {
   try {

@@ -16,6 +16,7 @@ import Pnavbar from "./PwaComponents/index";
 import SignUpForm from "./Pages/Authentication/signup";
 import LoginForm from "./Pages/Authentication/login";
 import Addaddress from "./Pages/Address/AddressInput";
+import style from '../src/Components/Common.module.scss'
 
 function App() {
   const [searchString, setSearchString] = useState("");

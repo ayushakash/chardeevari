@@ -1,14 +1,16 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "../../Store/rootReducer";
-
+ 
 interface userState {
   user: any;
   error: string | null;
+  address:[]
 }
 
 const initialState: userState = {
   user: null,
   error: null,
+  address:[]
 };
 
 export const userSlice = createSlice({
@@ -20,7 +22,7 @@ export const userSlice = createSlice({
       state.error = null;
     },
     setAddress: (state, action: PayloadAction<any>) => {
-      state.user.address = action.payload;
+      state.address = action.payload;
       state.error = null;
     },
 

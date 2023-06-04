@@ -32,7 +32,8 @@ const AppNavbar: React.FC<NavbarProps> = ({
             alt={brand}
             width="60"
             height="40"
-            className="d-none d-md-inline-block align-text-top me-2"
+            className=" d-md-inline-block align-text-top me-2"
+            // className="d-none d-md-inline-block align-text-top me-2"
           />
           {brand}
         </Link>

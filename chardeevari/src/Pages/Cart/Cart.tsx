@@ -35,10 +35,20 @@ const Cart: React.FC<any> = () => {
     );
   }
 
-  const onClickproceedToBuy = () =>{
-    navigate('/address')
-
-  }
+  const onClickproceedToBuy = () => {
+    // Check if token is present in local storage
+    const token = localStorage.getItem('token');
+  
+    if (token) {
+      // Token is present, navigate to the address page
+      navigate('/address');
+    } else {
+      // Token is not present, redirect to the login page and set the last page visited to last page
+       localStorage.setItem('lastPageVisited',"/address");
+      navigate('/login');
+    }
+  };
+  
 
   const handleProductAdditionCount = (cartProduct: any) => {
     let updatedProducts = [];

@@ -1,6 +1,7 @@
 import React, { useState, FormEvent } from 'react';
 import { useDispatch } from "react-redux";
 import { login } from '../../Slices/Auth/thunk';
+import { useNavigate } from 'react-router-dom';
 
 interface LoginFormState {
   email: string;
@@ -10,9 +11,10 @@ interface LoginFormState {
 const LoginForm: React.FC = () => {
 
   const dispatch = useDispatch<any>();
+  const navigate = useNavigate();
   const [formData, setFormData] = useState<LoginFormState>({
-    email: 'johd@exam.com',
-    password: 'password123',
+    email: 'akash@gmail.com',
+    password: '123456',
   });
 
   const { email, password } = formData;
@@ -38,6 +40,10 @@ const LoginForm: React.FC = () => {
       email: '',
       password: '',
     });
+    const redirectUrl:any =localStorage.getItem("lastPageVisited"); 
+    console.log("redirectUrl",redirectUrl);
+    navigate(redirectUrl)
+    //TODO:open the same page after click in which the page was opened 
   };
 
   return (

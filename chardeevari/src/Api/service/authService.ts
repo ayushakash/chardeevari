@@ -13,6 +13,12 @@ class AuthService {
 
         if (response.ok) {
           const data = await response.json();
+          console.log(data);
+          const authToken = response.headers.get("auth-token");
+          console.log(authToken);
+           // Store the token in local storage
+           localStorage.setItem('token', JSON.stringify(authToken));
+
           resolve(data); // Resolve with the response data
         } else {
           const error = await response.text();
@@ -41,8 +47,13 @@ class AuthService {
           const authToken = response.headers.get("auth-token");
           console.log(authToken);
   
-          // Set the 'token' cookie
-          document.cookie = `token=${authToken}; expires=Thu, 01 Jan 2099 00:00:00 UTC; path=/`;
+          // Store the token in local storage
+          localStorage.setItem('token', JSON.stringify(authToken));
+
+          // // Set the 'token' cookie
+          // document.cookie = `token=${authToken}; expires=Thu, 01 Jan 2099 00:00:00 UTC; path=/`;
+
+          
   
           resolve(data); // Resolve with the response data
         } else {
