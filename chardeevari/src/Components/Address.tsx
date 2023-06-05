@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import style from './Common.module.scss'
 import buttonStyle from "../Pages/Cart/Cart.module.scss";
+import { useNavigate } from 'react-router-dom';
 
 interface Address {
   _id: string;
@@ -18,12 +19,18 @@ interface AddressComponentProps {
 }
 
 export const AddressComponent: React.FC<AddressComponentProps> = ({ addresses }) => {
+  const navigate = useNavigate();
   const [selectedAddressId, setSelectedAddressId] = useState(addresses[0]._id);
 
   const handleAddressClick = (id: string) => {
     console.log(id)
     setSelectedAddressId(id);
   };
+
+
+  const handleDeliverToThisAddress = () =>{
+    navigate("/payment")
+  }
 
   return (
     <div>
@@ -52,7 +59,7 @@ export const AddressComponent: React.FC<AddressComponentProps> = ({ addresses })
             </div>
             {selectedAddressId === address._id && (
               <div className='d-flex flex-column' style={{ marginTop: '10px' }}>
-                <button className={buttonStyle.buyButton}>Deliver to this Address</button>
+                <button className={buttonStyle.buyButton} onClick={handleDeliverToThisAddress}>Deliver to this Address</button>
                 <div className='d-flex justify-content-between'>
                 <button className={style.editButton}>Edit</button>
                 <button className={style.editButton }>Delete</button>

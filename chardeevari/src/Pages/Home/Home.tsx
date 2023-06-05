@@ -28,7 +28,6 @@ type Props = {
 
 const HomePage: React.FC<any> = ({ searchString }) => {
   const dispatch = useDispatch<any>();
-  console.log("searchString", searchString);
   useEffect(() => {
     dispatch(fetchProducts());
   }, [dispatch]);
@@ -62,7 +61,6 @@ const HomePage: React.FC<any> = ({ searchString }) => {
     );
   });
 
-  console.log(filteredProducts);
 
   const imageUrlPrefix = "http://localhost:3001/uploads/";
   const handleAddToCart = (product: any) => {

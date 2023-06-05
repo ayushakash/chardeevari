@@ -105,4 +105,20 @@ const userSignup = async (req, res) => {
   }
 };
 
-module.exports = { userSignup, userLogin };
+// const userSignup = async (req, res) => {
+
+const userLogout = async (req, res) => {
+  // Clear the session
+  req.session.destroy();
+
+  // Clear the auth-token header
+  res.set('auth-token', '');
+
+  // Clear the token cookie
+  res.clearCookie('token');
+
+  // Send a success response
+  res.status(200).send('Logged out successfully');
+};
+
+module.exports = { userSignup, userLogin,userLogout };

@@ -3,6 +3,7 @@ import { FaRegCalendarPlus, FaShoppingCart,FaUserAlt } from "react-icons/fa";
 import { fetchProducts } from "../Slices/Products/thunk";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
+import {logout }from '../Slices/Auth/thunk'
 
 interface NavbarProps {
   brand: string;
@@ -19,6 +20,8 @@ const AppNavbar: React.FC<NavbarProps> = ({
 }) => {
   const [expanded, setExpanded] = useState(false);
   const handleToggle = () => setExpanded(!expanded);
+
+  const dispatch = useDispatch<any>();
 
   return (
     <nav
@@ -71,6 +74,11 @@ const AppNavbar: React.FC<NavbarProps> = ({
               </Link>
             </li>
             <li className="nav-item">
+              <Link to="/admin" className="nav-link">
+                <FaRegCalendarPlus /> Admin
+              </Link>
+            </li>
+            <li className="nav-item">
               <Link to="/signup" className="nav-link">
                 <FaUserAlt /> Signup
               </Link>
@@ -79,6 +87,11 @@ const AppNavbar: React.FC<NavbarProps> = ({
               <Link to="/login" className="nav-link">
                 <FaUserAlt /> login
               </Link>
+            </li>
+            <li className="nav-item" onClick={()=>dispatch(logout())}>
+              {/* <Link to="/login" className="nav-link"> */}
+                <FaUserAlt /> logout
+              {/* </Link> */}
             </li>
           </ul>
         </div>

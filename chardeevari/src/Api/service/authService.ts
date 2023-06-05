@@ -49,12 +49,6 @@ class AuthService {
   
           // Store the token in local storage
           localStorage.setItem('token', JSON.stringify(authToken));
-
-          // // Set the 'token' cookie
-          // document.cookie = `token=${authToken}; expires=Thu, 01 Jan 2099 00:00:00 UTC; path=/`;
-
-          
-  
           resolve(data); // Resolve with the response data
         } else {
           const error = await response.text();
@@ -65,6 +59,26 @@ class AuthService {
       }
     });
   }
+
+  userLogout () :Promise<any> {
+    return new Promise (async(resolve,reject)=>{
+      try {
+        // Clear the token from local storage
+        localStorage.removeItem('token');
+  
+        // Redirect to the login page or any other desired page
+        window.location.href = '/login';
+  
+        resolve("user Logged Out Sucessfully"); // Resolve without any data
+      } catch (error) {
+        reject(error); // Reject with the error object
+      }
+    })
+  }
+
+
+
+
 }  
 
 const authService = new AuthService();

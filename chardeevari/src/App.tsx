@@ -16,6 +16,7 @@ import Pnavbar from "./PwaComponents/index";
 import SignUpForm from "./Pages/Authentication/signup";
 import LoginForm from "./Pages/Authentication/login";
 import Addaddress from "./Pages/Address/AddressInput";
+import Payment from "./Pages/Payment/Payment";
 import style from '../src/Components/Common.module.scss'
 
 function App() {
@@ -46,6 +47,7 @@ function App() {
               <Route path="/signup" element={<SignUpForm />} />
               <Route path="/login" element={<LoginForm />} />
               <Route path="/addAddress" element={<Addaddress />} />
+              <Route path="/payment" element={<Payment />} />
             </Routes>
           </>
         

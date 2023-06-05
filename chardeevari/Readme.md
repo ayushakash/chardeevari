@@ -59,3 +59,4 @@ admin panel according to the merchant
 sms + email + seller 
 seller will have different module and also delivery as microservice which will have delivery order id will contain map 
 can select nearest store
+//reference https://standardstore.in/
