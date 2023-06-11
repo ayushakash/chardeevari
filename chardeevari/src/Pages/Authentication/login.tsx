@@ -13,7 +13,7 @@ const LoginForm: React.FC = () => {
   const dispatch = useDispatch<any>();
   const navigate = useNavigate();
   const [formData, setFormData] = useState<LoginFormState>({
-    email: 'akash@gmail.com',
+    email: 'ayushakash9@gmail.com',
     password: '123456',
   });
 

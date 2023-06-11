@@ -4,6 +4,7 @@ import { fetchProducts } from "../Slices/Products/thunk";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import {logout }from '../Slices/Auth/thunk'
+import ResponsiveDrawer from "./Drawer";
 
 interface NavbarProps {
   brand: string;
@@ -19,7 +20,15 @@ const AppNavbar: React.FC<NavbarProps> = ({
   searchBarfilter,
 }) => {
   const [expanded, setExpanded] = useState(false);
-  const handleToggle = () => setExpanded(!expanded);
+  // let expanded = false;
+  const handleToggle = () => {
+    console.log(expanded)
+    setExpanded(!expanded);
+  }
+
+  const handleCloseDrawer = () => {
+    setExpanded(false);
+  }
 
   const dispatch = useDispatch<any>();
 
@@ -54,7 +63,9 @@ const AppNavbar: React.FC<NavbarProps> = ({
         <button className="navbar-toggler" type="button" onClick={handleToggle}>
           <span className="navbar-toggler-icon"></span>
         </button>
-        <div className={`collapse navbar-collapse ${expanded ? "show" : ""}`}>
+        {expanded &&<ResponsiveDrawer expanded = {expanded} onClose={handleCloseDrawer}/>}
+        {/* <div className={`collapse navbar-collapse ${expanded ? "show" : ""}`}>  this is below line to activate the drawer of the navbar*/}
+        <div className={`collapse navbar-collapse`}>
           <ul className="navbar-nav ms-auto mb-2 mb-md-0">
             {links.map((link) => (
               <li className="nav-item" key={link.href}>

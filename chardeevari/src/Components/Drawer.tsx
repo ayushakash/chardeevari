@@ -1,7 +1,6 @@
 import * as React from "react";
 import Box from "@mui/material/Box";
 import Drawer from "@mui/material/Drawer";
-import Button from "@mui/material/Button";
 import List from "@mui/material/List";
 import Divider from "@mui/material/Divider";
 import ListItem from "@mui/material/ListItem";
@@ -10,13 +9,22 @@ import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import InboxIcon from "@mui/icons-material/MoveToInbox";
 import MailIcon from "@mui/icons-material/Mail";
+import Slide from "@mui/material/Slide";
 
 type Anchor = "top" | "left" | "bottom" | "right";
 
-export default function ResponsiveDrawer() {
+interface ResponsiveDrawerProps {
+  expanded: boolean;
+  onClose: () => void;
+}
+
+const ResponsiveDrawer: React.FC<ResponsiveDrawerProps> = ({
+  expanded,
+  onClose,
+}) => {
   const [state, setState] = React.useState({
     top: false,
-    left: false,
+    left: true, // Open the drawer by default
     bottom: false,
     right: false,
   });
@@ -42,11 +50,9 @@ export default function ResponsiveDrawer() {
         marginTop: "64px",
       }}
       role="presentation"
-      onClick={toggleDrawer(anchor, false)}
-      onKeyDown={toggleDrawer(anchor, false)}
     >
       <List>
-        {["Inbox", "Starred", "Send email", "Drafts"].map((text, index) => (
+        {["Home", "Wishlist", "Account", "Combo Offers"].map((text, index) => (
           <ListItem key={text} disablePadding>
             <ListItemButton>
               <ListItemIcon>
@@ -59,7 +65,7 @@ export default function ResponsiveDrawer() {
       </List>
       <Divider />
       <List>
-        {["All mail", "Trash", "Spam"].map((text, index) => (
+        {["About us","Privacy Policy","Replacement Policy","Contact Us","terms and Condition","Shipping Policy Policy"].map((text, index) => (
           <ListItem key={text} disablePadding>
             <ListItemButton>
               <ListItemIcon>
@@ -75,14 +81,20 @@ export default function ResponsiveDrawer() {
 
   return (
     <div>
-      <Button onClick={toggleDrawer("left", true)}>Open Drawer</Button>
+      {/* Close button */}
       <Drawer
-        anchor={"left"}
-        open={state["left"]}
-        onClose={toggleDrawer("left", false)}
+        anchor="left"
+        open={expanded}
+        onClose={onClose}
+        transitionDuration={500} // Adjust the duration as desired
       >
-        {list("left")}
+        {/* Use Slide for a smooth transition */}
+        <Slide direction="right" in={expanded} mountOnEnter unmountOnExit>
+          {list("left")}
+        </Slide>
       </Drawer>
     </div>
   );
-}
+};
+
+export default ResponsiveDrawer;

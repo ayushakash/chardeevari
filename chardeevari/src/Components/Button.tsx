@@ -3,14 +3,19 @@ import style from './button.module.scss'
 
 export default function AddToCart(props:any) {
   const [buttonFlip, setButtonFlip] = useState(true);
-  const [count, setCount] = useState<any>(0);
+  const [count, setCount] = useState<any>(props.product.orderCount?props.product.orderCount:0);
   // const [product,setProduct] = useState<any>([])
 
   const addOnClick = () => {
-    setCount(count + 1);
+    console.log(count);
+    setCount(count + 1); 
     buttonFlip === true ? setButtonFlip(false) : setButtonFlip(true);
     sendToHome(count+1);
   };
+
+  useEffect(() => {
+    setCount(props.product.orderCount || 0);
+  }, [props.product.orderCount]);
 
 
   const handleIncrement = () => {

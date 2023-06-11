@@ -4,6 +4,7 @@ const cors = require('cors');
 const productRouter = require('./routes/product');
 const authRouter = require('./routes/auth');
 const addressRouter = require('./routes/address');
+const orderRouter = require('./routes/order');
 require('dotenv').config();
 const  cookieParser = require('cookie-parser')
 
@@ -37,6 +38,7 @@ connectMongoDb(process.env.MONGO_URI).then(() => {
 app.use('/products', productRouter);
 app.use('/auth', authRouter);
 app.use('/address', addressRouter);
+app.use('/order', orderRouter);
 
 
 // Start the server

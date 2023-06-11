@@ -3,7 +3,7 @@ import style from "./Cart.module.scss";
 import { RootState } from "../../Store/rootReducer";
 import React, { useEffect, useState } from "react";
 import { addProduct, getCartproducts } from "../../Slices/Products/thunk";
-import { Button, Card, Col, Row } from "react-bootstrap";
+import { Button, Card, Col, Container, Row } from "react-bootstrap";
 import { Rating } from "@mui/material";
 import StarIcon from "@mui/material/SvgIcon";
 import AddToCart from "../../Components/Button";
@@ -13,6 +13,10 @@ import { useNavigate } from 'react-router-dom';
 const Cart: React.FC<any> = () => {
   const dispatch = useDispatch<any>();
   const imageUrlPrefix = "http://localhost:3001/uploads/";
+
+  const cartProducts = useSelector(
+    (state: RootState) => state.product.cartProducts
+  );
 
   const navigate = useNavigate();
 
@@ -72,9 +76,7 @@ const Cart: React.FC<any> = () => {
     dispatch(getCartproducts());
   }, []);
 
-  const cartProducts = useSelector(
-    (state: RootState) => state.product.cartProducts
-  );
+
 
   const calculateTotalCost = () => {
     let total: any = [];
@@ -90,7 +92,8 @@ const Cart: React.FC<any> = () => {
 
   return (
     <>
-      <div className="row ">
+      <div className="row " style={{  position: "relative"}}>
+        <Container>
         <div className="col-lg-8 mt-2 border mx-2 ">
           <div className="d-flex justify-content-between">
             <div className="px-2">
@@ -127,6 +130,7 @@ const Cart: React.FC<any> = () => {
                     <div className = "px-4 d-flex align-items-end" style={{fontWeight:"500"}}>
                     Rs. {product.productPrice*product.orderCount}
                     </div>
+
                   </div>
                 </div>
               ))}
@@ -140,6 +144,8 @@ const Cart: React.FC<any> = () => {
           <button className={style.buyButton} onClick={onClickproceedToBuy} >Proceed to Buy ({calculateTotalCost().totalItem} {(calculateTotalCost().totalItem >1)? "items":"item" })</button>
 
         </div>
+        
+        </Container>
       </div>
     </>
   );

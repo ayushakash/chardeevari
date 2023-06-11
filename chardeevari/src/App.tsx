@@ -17,7 +17,8 @@ import SignUpForm from "./Pages/Authentication/signup";
 import LoginForm from "./Pages/Authentication/login";
 import Addaddress from "./Pages/Address/AddressInput";
 import Payment from "./Pages/Payment/Payment";
-import style from '../src/Components/Common.module.scss'
+import style from "../src/Components/Common.module.scss";
+import MobileFooter from "./Components/FooterMobile";
 
 function App() {
   const [searchString, setSearchString] = useState("");
@@ -30,28 +31,35 @@ function App() {
   return (
     <>
       <BrowserRouter>
-          <>
-            {/* <Pnavbar /> */}
-            <AppNavbar
-              brand={""}
-              links={[]}
-              logoSrc={"/Chardeevari.png"}
-              searchBarfilter={searchBarfilter}
+        <>
+          <AppNavbar
+            brand={""}
+            links={[]}
+            
+            logoSrc={"/Chardeevari.png"}
+            searchBarfilter={searchBarfilter}
+          />
+          <Routes>
+            <Route
+              path="/"
+              element={<HomePage searchString={searchString} />}
             />
-            <Routes>
-              <Route path="/" element={<HomePage searchString={searchString} />} />
-              <Route path="/admin/upload-product" element={<ProductUploader />} />
-              <Route path="/cart" element={<Cart />} />
-              <Route path="/admin" element={<AdminPanel />} />
-              <Route path="/address" element={<Address />} />
-              <Route path="/signup" element={<SignUpForm />} />
-              <Route path="/login" element={<LoginForm />} />
-              <Route path="/addAddress" element={<Addaddress />} />
-              <Route path="/payment" element={<Payment />} />
-            </Routes>
-          </>
-        
-          
+            <Route path="/admin/upload-product" element={<ProductUploader />} />
+            <Route path="/cart" element={<Cart />} />
+            <Route path="/admin" element={<AdminPanel />} />
+            <Route path="/address" element={<Address />} />
+            <Route path="/signup" element={<SignUpForm />} />
+            <Route path="/login" element={<LoginForm />} />
+            <Route path="/addAddress" element={<Addaddress />} />
+            <Route path="/payment" element={<Payment />} />
+          </Routes>
+          <div
+            className="d-md-none d-sm-block "
+            style={{ position: "fixed", bottom: 0, width: "100%" }}
+          >
+            <MobileFooter />
+          </div>
+        </>
       </BrowserRouter>
     </>
   );

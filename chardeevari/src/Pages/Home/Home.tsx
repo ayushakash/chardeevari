@@ -9,7 +9,7 @@ import StarIcon from '@mui/material/SvgIcon';
 import AddToCart from "../../Components/Button";
 import Footer from "../../Components/Footer";
 import SearchAppBar from "../../Components/SearchBar";
-import ResponsiveDrawer from "../../Components/Drawer";
+import MobileFooter from "../../Components/FooterMobile";
 
 export type Product = {
   id: number;
@@ -70,8 +70,8 @@ const HomePage: React.FC<any> = ({ searchString }) => {
   const [quantity, setQuantity] = useState(1);
 
   return (
-    <div style={{ minHeight: "100vh", position: "relative" }}>
-
+    <>
+    <div style={{ minHeight: "100vh", position: "relative" ,paddingBottom:"56px" }}>
       <Container className="my-3">
         <div style={{ position: "sticky", top: 0, zIndex: 1 }}></div>
         <Row>
@@ -99,15 +99,11 @@ const HomePage: React.FC<any> = ({ searchString }) => {
               </Card>
             </Col>
           ))}
-          <div
-            className="d-md-none d-sm-block mb-2 px-2"
-            style={{ position: "fixed", bottom: 0 }}
-          >
-            <Footer />
-          </div>
         </Row>
       </Container>
     </div>
+ 
+    </>
   );
 };
 

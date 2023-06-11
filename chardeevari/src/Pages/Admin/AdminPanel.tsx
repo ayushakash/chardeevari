@@ -35,7 +35,8 @@ const AdminPanel = () => {
   }
   return (
     <React.Fragment>
-      <ResponsiveDrawer />
+      <ResponsiveDrawer expanded = {true}onClose={()=>console.log("button pressed")} />
+      
       <div className="row">
         <div className="col-lg-8 ">
           <div className="row justify-content-around " style={{ height: 150 }}>
