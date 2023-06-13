@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState,useMemo } from "react";
 import { Container, Row, Col, Card, Button } from "react-bootstrap";
 import { addProduct, fetchProducts } from "../../Slices/Products/thunk";
 import { useDispatch, useSelector } from "react-redux";
@@ -27,10 +27,16 @@ type Props = {
 };
 
 const HomePage: React.FC<any> = ({ searchString }) => {
+
+  const [hasFetched, setHasFetched] = useState(false);
+
   const dispatch = useDispatch<any>();
   useEffect(() => {
-    dispatch(fetchProducts());
-  }, [dispatch]);
+if (!hasFetched) { // Only make the API call if data has not been fetched
+      dispatch(fetchProducts());
+      setHasFetched(true); // Update the state to indicate that data has been fetched
+    }
+  }, [dispatch, hasFetched]);
 
   const cartProducts = useSelector(
     (state: RootState) => state.product.cartProducts
@@ -54,12 +60,14 @@ const HomePage: React.FC<any> = ({ searchString }) => {
   };
 
   const products = useSelector((state: RootState) => state.product.products);
-  let filteredProducts = products.filter((item: any) => {
-    return (
-      item.productName.toLowerCase().includes(searchString.toLowerCase()) ||
-      item.brand.toLowerCase().includes(searchString.toLowerCase())
-    );
-  });
+  let filteredProducts =  useMemo(() => {
+    return products.filter((item: any) => {
+      return (
+        item.productName.toLowerCase().includes(searchString.toLowerCase()) ||
+        item.brand.toLowerCase().includes(searchString.toLowerCase())
+      );
+    });
+  }, [products, searchString]);
 
 
   const imageUrlPrefix = "http://localhost:3001/uploads/";

@@ -31,7 +31,9 @@ export default function MobileFooter() {
     {
       icon: <FaUser size="25px" />,
       label: "Account",
-      onClick: handleButtonClick
+      onClick: () => {
+        navigate("/account");
+      }
     }
   ];
 

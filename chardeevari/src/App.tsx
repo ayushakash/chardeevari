@@ -19,6 +19,7 @@ import Addaddress from "./Pages/Address/AddressInput";
 import Payment from "./Pages/Payment/Payment";
 import style from "../src/Components/Common.module.scss";
 import MobileFooter from "./Components/FooterMobile";
+import Account from "./Pages/Account/Account";
 
 function App() {
   const [searchString, setSearchString] = useState("");
@@ -52,6 +53,7 @@ function App() {
             <Route path="/login" element={<LoginForm />} />
             <Route path="/addAddress" element={<Addaddress />} />
             <Route path="/payment" element={<Payment />} />
+            <Route path="/account" element={<Account />} />
           </Routes>
           <div
             className="d-md-none d-sm-block "
