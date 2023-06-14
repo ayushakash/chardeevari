@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const { v4: uuid } = require('uuid');
 
 const OrderStatusEnum = {
     PENDING: 0,
@@ -10,6 +11,11 @@ const OrderStatusEnum = {
   };
 
   const orderProductSchema = new mongoose.Schema({
+    _id: {
+      type: String,
+      required: true,
+      default: uuid(),
+    },
     productId: {
       type: String,
       required: true,

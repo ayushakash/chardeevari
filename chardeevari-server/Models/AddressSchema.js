@@ -6,24 +6,6 @@ const AddressTypeEnum = {
   shipping: 1,
 };
 
-const cartItemSchema = new mongoose.Schema({
-  _id: {
-    type: String,
-    required: true,
-    default: uuid(),
-  },
-  productId: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Product',
-    required: true,
-  },
-  quantity: {
-    type: Number,
-    required: true,
-  },
-});
-
-
 const addressSchema = new mongoose.Schema({
   _id: {
     type: String,
@@ -62,51 +44,18 @@ const addressSchema = new mongoose.Schema({
     type: Number,
     default: 1,
     required: true,
+  },
+  userId: {
+    type: String,
+    required: true,
   }
-});
-
-
-const userSchema = new mongoose.Schema({
-  _id: {
-    type: String,
-    required: true,
-    default: uuid(),
-  },
-  name: {
-    type: String,
-    required: true,
-  },
-  email: {
-    type: String,
-    required: true,
-  },
-  password: {
-    type: String,
-    required: true,
-  },
-  phone: {
-    type: String,
-    required: true,
-  },
-  gstNumber: {
-    type: String,
-    required: false,
-  },
-  address: {
-    type: [String],
-    required: false,
-  },
-  cart: {
-    type: [String],
-    require: false,
-  },
 }, {
-  timestamps: true,
+    timestamps: true,
 });
 
-const User = mongoose.model('User', userSchema);
+const Address = mongoose.model('Address', addressSchema);
 
-module.exports = User;
+module.exports = Address;
 
 //add billing and shipping address
 //seperate order from user and also make it static in another table using the user id we will fetch the data

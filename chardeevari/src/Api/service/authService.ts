@@ -31,6 +31,7 @@ class AuthService {
   }
 
   userLogin(loginData: any): Promise<any> {
+    console.log("login data", loginData)
     return new Promise(async (resolve, reject) => {
       try {
         const response = await fetch("http://localhost:3001/auth/login", {
@@ -40,6 +41,8 @@ class AuthService {
           },
           body: JSON.stringify(loginData),
         });
+
+        console.log(response)
   
         if (response.ok) {
           const data = await response.json();
@@ -48,7 +51,7 @@ class AuthService {
           console.log(authToken);
   
           // Store the token in local storage
-          localStorage.setItem('token', JSON.stringify(authToken));
+          await localStorage.setItem('token', JSON.stringify(authToken));
           resolve(data); // Resolve with the response data
         } else {
           const error = await response.text();

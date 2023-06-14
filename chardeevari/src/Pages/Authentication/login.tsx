@@ -13,8 +13,8 @@ const LoginForm: React.FC = () => {
   const dispatch = useDispatch<any>();
   const navigate = useNavigate();
   const [formData, setFormData] = useState<LoginFormState>({
-    email: 'ayushakash9@gmail.com',
-    password: '123456',
+    email: 'zmmsayeed@gmail.com',
+    password: '12345',
   });
 
   const { email, password } = formData;
@@ -40,7 +40,7 @@ const LoginForm: React.FC = () => {
       email: '',
       password: '',
     });
-    const redirectUrl:any =localStorage.getItem("lastPageVisited"); 
+    const redirectUrl:any = localStorage.getItem("lastPageVisited"); 
     console.log("redirectUrl",redirectUrl);
     window.location.href = redirectUrl
     // navigate(redirectUrl)

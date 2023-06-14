@@ -1,10 +1,10 @@
 const jwt = require('jsonwebtoken');
 const User = require("../Models/UserModel");
+const Address = require("../Models/AddressSchema");
 
 const createAddress = async (req, res) => {
   try {
-    const { name, address, streetAddress, city, state, pincode, phone, addressType } = req.body;
-
+    let newAddress = new Address(req.body);
     const userId = req.userId;
 
     const user = await User.findById(userId);
@@ -12,19 +12,14 @@ const createAddress = async (req, res) => {
       return res.status(404).send("User not found");
     }
 
-    const newAddress = {
-      name,
-      address,
-      streetAddress,
-      city,
-      state,
-      pincode,
-      phone,
-      addressType,
-    };
+    newAddress.userId = userId;
+    let addedAddress = await newAddress.save();
+    console.log("Added address:", addedAddress);
 
-    user.address.push(newAddress);
+    let newId = addedAddress._id;
+    user.address.push(newId);
     await user.save();
+
     res.status(201).json(user);
   } catch (error) {
     console.error("Error while creating address:", error);
@@ -81,21 +76,22 @@ const updateAddress = async (req, res) => {
 };
 
 const getAddress = async (req, res) => {
+  console.log("Get address")
   try {
     const userId = req.userId;
     const user = await User.findById(userId);
+
     if (!user) {
       return res.status(404).send("User not found");
     }
 
-    const addresses = user.address; // Get all addresses from the user object
-
+    const addresses = user.address;
     if (addresses.length === 0) {
       return res.status(404).send("No addresses found");
     }
-    console.log(addresses);
 
-    res.status(200).json(addresses);
+    let allAddresses = await Address.find({ _id: { $in: addresses } });
+    res.status(200).json(allAddresses);
   } catch (error) {
     console.error("Error while getting addresses:", error);
     res.status(500).send("Error while getting addresses. Please try again later.");

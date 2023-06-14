@@ -10,9 +10,11 @@ const app = express();
 app.use(cookieParser());
 
 const userLogin = async (req, res) => {
+  console.log("Entering login")
   const { email, password } = req.body;
-  console.log(req.body);
   const user = await User.findOne({ email });
+  console.log("User: ", user);
+
   if (!user) {
     res.status(403).send("Email ID not registered");
   }
@@ -58,18 +60,20 @@ const userSignup = async (req, res) => {
   console.log(req.body);
   try {
     const user = new User(req.body);
-    console.log("User: ", user);
+    // console.log("User: ", user);
 
     //check if all the values are present or not
     const { name, email, password, phone } = req.body;
     if (!(name && email && password && phone)) {
-      res.status(404).send("all fields are compulsary");
+      res.status(404).send("All fields are compulsory");
     }
 
     //hash the password
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(req.body.password, salt);
     user.password = hashedPassword;
+
+    console.log("User: ", user);
 
     //check if user already exists
     const userExists = await User.findOne({ email: req.body.email });
