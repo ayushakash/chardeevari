@@ -16,21 +16,9 @@ const initialState: ProductState = {
 export const productSlice = createSlice({
   name: "product",
   initialState,
-  reducers: {
+  reducers: { 
 
-    addProducts: (state, action) => {
-      const updatedProducts = action.payload;
-      updatedProducts.forEach((product:any) => {
-        const existingProductIndex = state.cartProducts.findIndex((p) => p.id === product.id);
-        if (existingProductIndex !== -1) {
-          state.cartProducts[existingProductIndex] = product; // update existing product
-        } else {
-          state.cartProducts.push(product); // add new product
-        }
-      });
-      // Save updated state to local storage 
-      localStorage.setItem("cartProduct", JSON.stringify(state.cartProducts));
-    },
+
     getProducts: (state, action) => {
       state.products = (action.payload);
     },
@@ -40,7 +28,7 @@ export const productSlice = createSlice({
   }
 });
 
-export const { addProducts, getProducts,getCartProducts } = productSlice.actions;
+export const {  getProducts,getCartProducts} = productSlice.actions;
 
 export const selectProduct = (state: RootState) => state.product.products;
 

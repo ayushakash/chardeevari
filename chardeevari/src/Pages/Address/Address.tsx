@@ -29,12 +29,13 @@ const Address = () => {
     }
   };
   
-
+  
   useEffect(() => {
     dispatch(getAddress());
   }, []);
-
+  
   const addresses = useSelector((state: RootState) => state.user.address);
+
   return (
     <>
       <div className="mx-4">

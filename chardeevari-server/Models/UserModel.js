@@ -1,27 +1,11 @@
-const mongoose = require('mongoose');
-const { v4: uuid } = require('uuid');
+const mongoose = require("mongoose");
+const { v4: uuid } = require("uuid");
 
 const AddressTypeEnum = {
   billing: 0,
   shipping: 1,
 };
 
-const cartItemSchema = new mongoose.Schema({
-  _id: {
-    type: String,
-    required: true,
-    default: uuid(),
-  },
-  productId: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Product',
-    required: true,
-  },
-  quantity: {
-    type: Number,
-    required: true,
-  },
-});
 
 
 const addressSchema = new mongoose.Schema({
@@ -34,8 +18,8 @@ const addressSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  address:{
-    type:String,
+  address: {
+    type: String,
     required: true,
   },
   streetAddress: {
@@ -58,53 +42,55 @@ const addressSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  addressType:{
+  addressType: {
     type: Number,
     default: 1,
     required: true,
+  },
+});
+
+const userSchema = new mongoose.Schema(
+  {
+    _id: {
+      type: String,
+      required: true,
+      default: uuid(),
+    },
+    name: {
+      type: String,
+      required: true,
+    },
+    email: {
+      type: String,
+      required: true,
+    },
+    password: {
+      type: String,
+      required: true,
+    },
+    phone: {
+      type: String,
+      required: true,
+    },
+    gstNumber: {
+      type: String,
+      required: false,
+    },
+    address: {
+      type: [String],
+      required: false,
+    },
+    cart: {
+      type: [String],
+      require: false,
+    },
+  },
+  {
+    timestamps: true,
   }
-});
+);
 
-
-const userSchema = new mongoose.Schema({
-  _id: {
-    type: String,
-    required: true,
-    default: uuid(),
-  },
-  name: {
-    type: String,
-    required: true,
-  },
-  email: {
-    type: String,
-    required: true,
-  },
-  password: {
-    type: String,
-    required: true,
-  },
-  phone: {
-    type: String,
-    required: true,
-  },
-  gstNumber: {
-    type: String,
-    required: false,
-  },
-  address: {
-    type: [String],
-    required: false,
-  },
-  cart: {
-    type: [String],
-    require: false,
-  },
-}, {
-  timestamps: true,
-});
-
-const User = mongoose.model('User', userSchema);
+const User = mongoose.model("User", userSchema);
 
 module.exports = User;
 

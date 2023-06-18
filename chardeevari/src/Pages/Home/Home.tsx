@@ -1,6 +1,7 @@
 import React, { useEffect, useState,useMemo } from "react";
 import { Container, Row, Col, Card, Button } from "react-bootstrap";
-import { addProduct, fetchProducts } from "../../Slices/Products/thunk";
+import {  fetchProducts } from "../../Slices/Products/thunk";
+
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../Store/rootReducer";
 import style from './Home.module.scss'
@@ -10,6 +11,7 @@ import AddToCart from "../../Components/Button";
 import Footer from "../../Components/Footer";
 import SearchAppBar from "../../Components/SearchBar";
 import MobileFooter from "../../Components/FooterMobile";
+import { addProduct } from "../../Slices/Cart/thunk";
 
 export type Product = {
   id: number;

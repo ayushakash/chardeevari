@@ -1,9 +1,11 @@
+import { config } from '../../config';
+
 class AuthService {
   userSignup(signupData: any): Promise<any> {
     return new Promise(async (resolve, reject) => {
       console.log(signupData);
       try {
-        const response = await fetch("http://localhost:3001/auth/signup", {
+        const response = await fetch(`${config.API_BASEPATH}/auth/signup`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -31,10 +33,10 @@ class AuthService {
   }
 
   userLogin(loginData: any): Promise<any> {
-    console.log("login data", loginData)
+    console.log("login data",config.API_BASEPATH);
     return new Promise(async (resolve, reject) => {
       try {
-        const response = await fetch("http://localhost:3001/auth/login", {
+        const response = await fetch(`${config.API_BASEPATH}/auth/login`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",

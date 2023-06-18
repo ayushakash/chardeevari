@@ -1,8 +1,11 @@
+import { config } from '../../config';
+
+
 class UserService {
     addAddress(address:any,token:any) {       
       return new Promise(async (resolve, reject) => {
         try {
-          const response = await fetch(`http://localhost:3001/address/`, {
+          const response = await fetch(`${config.API_BASEPATH}/address/`, {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
@@ -27,7 +30,7 @@ class UserService {
     updateAddress(address:any) {
       return new Promise(async (resolve, reject) => {
         try {
-          const response = await fetch(`http://localhost:3001/address/${address.userId}/${address.addressId}`, {  //send token here
+          const response = await fetch(`${config.API_BASEPATH}/address/${address.userId}/${address.addressId}`, {  //send token here
             method: "PUT",
             headers: {
               "Content-Type": "application/json",
@@ -51,7 +54,7 @@ class UserService {
     getAddress(token:any) {
       return new Promise(async (resolve, reject) => {
         try {
-          const response = await fetch(`http://localhost:3001/address/`, {
+          const response = await fetch(`${config.API_BASEPATH}/address/`, {
             method: "GET",
             headers: {
               "Content-Type": "application/json",
@@ -59,7 +62,7 @@ class UserService {
             },
           });
 
-          console.log(response);
+          console.log(response.body);
   
           if (response.ok) {
             const data = await response.json();

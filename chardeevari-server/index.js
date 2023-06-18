@@ -5,6 +5,8 @@ const productRouter = require('./routes/product');
 const authRouter = require('./routes/auth');
 const addressRouter = require('./routes/address');
 const orderRouter = require('./routes/order');
+const merchantRouter = require('./routes/merchant');
+const cartRouter = require('./routes/cart');
 require('dotenv').config();
 const  cookieParser = require('cookie-parser')
 
@@ -39,6 +41,8 @@ app.use('/products', productRouter);
 app.use('/auth', authRouter);
 app.use('/address', addressRouter);
 app.use('/order', orderRouter);
+app.use('/merchant', merchantRouter);
+app.use('/cart', cartRouter);
 
 
 // Start the server

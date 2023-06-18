@@ -41,8 +41,8 @@ const LoginForm: React.FC = () => {
       password: '',
     });
     const redirectUrl:any = localStorage.getItem("lastPageVisited"); 
-    console.log("redirectUrl",redirectUrl);
-    window.location.href = redirectUrl
+    // console.log("redirectUrl",redirectUrl);
+    // window.location.href = redirectUrl
     // navigate(redirectUrl)
     //TODO:open the same page after click in which the page was opened 
   };

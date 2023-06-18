@@ -1,16 +1,16 @@
 import { config } from '../../config';
 
-class OrderService {
-  createOrder(token: any, orderDetails: any) {
+class CartService {
+  addToCart(token: any, cartDetails: any) {
     return new Promise(async (resolve, reject) => {
       try {
-        const response = await fetch(`${config.API_BASEPATH}/order/`, {
+        const response = await fetch(`${config.API_BASEPATH}/cart/`, { 
           method: "POST",
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${token}`,
           },
-          body: orderDetails,
+          body: JSON.stringify(cartDetails),
         });
 
         if (response.ok) {
@@ -26,10 +26,10 @@ class OrderService {
     });
   }
 
-  getOrders(token: any) {
+  getCartItems(token: any) {
     return new Promise(async (resolve, reject) => {
       try {
-        const response = await fetch(`${config.API_BASEPATH}/order/`, {
+        const response = await fetch(`${config.API_BASEPATH}/cart/`, {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -52,5 +52,5 @@ class OrderService {
   }
 }
 
-const orderService = new OrderService();
-export default orderService;
+const cartService = new CartService();
+export default cartService;

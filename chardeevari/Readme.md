@@ -60,3 +60,87 @@ sms + email + seller
 seller will have different module and also delivery as microservice which will have delivery order id will contain map 
 can select nearest store
 //reference https://standardstore.in/
+
+
+
+Merchant onboarding
+Form should be there to onboard: 
+Table  of merchant :-
+
+#most dedtails will be fetched by the GSTIN api 
+make seperate frontend for merchant and admin..
+login will be same just the role will be different
+//it will be called merchant login
+
+API for gst verification -- http://sheet.gstincheck.co.in/check/2bc3f12374405f9973a9bdfb246b2992/20BTSPA0601F2ZH
+
+Name 
+shopName
+GSTno
+AAdhar
+mobileNo
+email id
+address it will have pin code
+location
+
+once onboarded they can add items and we can approve..or in starting we will take manually and upload them..
+we need some kinda approval process...so that if any one is adding wrong item or something like this then admin has right to reject....
+and once approved by admin only those are visible to customer.....
+
+after login Merchant dashboard :
+dashboard with all details about orders,sales etc
+order history
+pending payments
+all transactions done till now
+total earnings made so far
+orders placed today
+
+In admin dashboard the above features + 
+merchant management panel where you can see pending approvals/rejected requests.
+you should be able to view total number of users registered as well as active ones.
+view user profile info such as name email address mobile no location shopname gstin adhaar card photograph etc
+add new merchant request from here also edit existing data.
+approve /reject these requests.
+
+top rated merchants based upon their rating given by customers
+most viewed product list (based uppon views)
+recently added products(new arrivals )
+bestselling products
+trending products
+
+
+#For Marketting and sales
+
+hot deals
+featured offers
+coupon codes for discounts
+loyalty points system
+referral programme
+refer a friend option
+wallet balance section
+cashback options
+gift cards
+
+
+#for convienence
+
+customer support chatbot
+contact us form
+about page
+terms & conditions
+privacy policy
+return policies
+refund polices
+shipping charges
+payment methods accepted
+delivery timelines
+cancellation/ refund policie
+disclaimer
+FAQ's
+feedback forms
+social media links
+blog link
+newsletter subscription box
+
+
+//next add ddelete from cart functionality it will ddedlete from the cart for login and non login user

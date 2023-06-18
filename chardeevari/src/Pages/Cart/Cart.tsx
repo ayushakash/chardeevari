@@ -2,21 +2,20 @@ import { useDispatch, useSelector } from "react-redux";
 import style from "./Cart.module.scss";
 import { RootState } from "../../Store/rootReducer";
 import React, { useEffect, useState } from "react";
-import { addProduct, getCartproducts } from "../../Slices/Products/thunk";
 import { Button, Card, Col, Container, Row } from "react-bootstrap";
 import { Rating } from "@mui/material";
 import StarIcon from "@mui/material/SvgIcon";
 import AddToCart from "../../Components/Button";
 import { useNavigate } from 'react-router-dom';
+import { addProduct, getCartproducts } from "../../Slices/Cart/thunk";
 
 
 const Cart: React.FC<any> = () => {
   const dispatch = useDispatch<any>();
   const imageUrlPrefix = "http://localhost:3001/uploads/";
 
-  const cartProducts = useSelector(
-    (state: RootState) => state.product.cartProducts
-  );
+
+  const cartProducts = useSelector((state: RootState) => state.cart.cartProducts)
 
   const navigate = useNavigate();
 
@@ -63,7 +62,7 @@ const Cart: React.FC<any> = () => {
     if (existingProduct) {
       const updatedProduct = {
         ...existingProduct,
-        orderCount: cartProduct.orderCount,
+        quantity: cartProduct.quantity,
       };
       updatedProducts.push(updatedProduct); //updating old product
     } else {
@@ -82,8 +81,8 @@ const Cart: React.FC<any> = () => {
     let total: any = [];
     let totalCount: any = [];
     cartProducts.map((item: any) => {
-      total.push(item.orderCount * item.productPrice);
-      totalCount.push(item.orderCount);
+      total.push(item.quantity * item.productPrice);
+      totalCount.push(item.quantity);
     });
     return {totalCost:total.reduce((a: any, b: any) => a + b, 0),
             totalItem:totalCount.reduce((a: any, b: any) => a + b, 0)} ;
@@ -98,7 +97,7 @@ const Cart: React.FC<any> = () => {
           <div className="d-flex justify-content-between">
             <div className="px-2">
               <b className="display-4" style={{fontWeight:"500"}}>Shopping cart</b>
-              {cartProducts.map((product: any) => (
+              {(cartProducts) && cartProducts.map((product: any) => (
                 <div key={product.id}>
                   <div className="d-flex mt-2 justify-content-between">
                     <div
@@ -123,12 +122,12 @@ const Cart: React.FC<any> = () => {
                           </div>
                         </div>
                         <div className={`${style.cardTitle} text-md text-lg`}>
-                          Quantity: {product.orderCount}
+                          Quantity: {product.quantity}
                         </div>
                       </Col>
                     </Row>
                     <div className = "px-4 d-flex align-items-end" style={{fontWeight:"500"}}>
-                    Rs. {product.productPrice*product.orderCount}
+                    Rs. {product.productPrice*product.quantity}
                     </div>
 
                   </div>
