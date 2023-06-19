@@ -4,28 +4,24 @@ import { config } from "../../config";
 
 import {
   addProductsLocally,
-  getCartProducts,
-  addProductsRemote,
+  getCartProduct,
+  removeCartProduct,
 } from "./reducers";
+
 import cartService from "../../Api/service/cartService";
 
-export const addProduct =
-  (productData: any): ThunkAction<void, RootState, unknown, any> =>
-  async (dispatch) => {
-    const token = localStorage.getItem("token");
+export const addProduct =(productData: any): ThunkAction<void, RootState, unknown, any> => async (dispatch) => {
+    
+  const token = localStorage.getItem("token");
     try {
       if (token) {
         const response: any = await cartService.addToCart(token, {
           product: productData[0]._id,
-          quantity: productData[0].orderCount,
+          quantity: productData[0].quantity,
         });
-        // if(response.length >0){
-        // dispatch(addProductsRemote(productData));
-        // }
-        // else{
-        //   console.log("product additon failed in the cart redirect to login")
-        // }
+        if (response) dispatch(getCartproducts());
       } else {
+        //when not login
         dispatch(addProductsLocally(productData));
       }
     } catch {
@@ -33,27 +29,39 @@ export const addProduct =
     }
   };
 
-
 export const getCartproducts =(): ThunkAction<void, RootState, unknown, any> => async (dispatch) => {
-    
-  
-  const token = localStorage.getItem("token");
-  if(token){
-    const cartItems: any = await cartService.getCartItems(token);
-    const products = cartItems.map((item: any) => ({
-      ...item.product,
-      quantity: item.quantity
-    }));
-    console.log(products)
-    //here we are getting a array of products we have to only extract products and then render it
+    const token = localStorage.getItem("token");
+    if (token) {
+      const cartItems: any = await cartService.getCartItems(token);
+      if(cartItems.length){
+        const products = cartItems.map((item: any) => ({
+          ...item.product,
+          quantity: item.quantity,
+        }));
+        dispatch(getCartProduct(products));
+      }
+      else{
+        dispatch(getCartProduct([]));
+      }
+    } else {
+      const cartProducts: any = localStorage.getItem("cartProduct");
+      dispatch(getCartProduct(JSON.parse(cartProducts)));
+    }
+  };
 
-    // console.log(cartItems)
-    dispatch(getCartProducts(products));
-    
-  }
-  else{
-    const cartProducts: any = localStorage.getItem("cartProduct");
-    dispatch(getCartProducts(JSON.parse(cartProducts)));
-  }
+export const deleteCartproducts =(id:any): ThunkAction<void, RootState, unknown, any> => async (dispatch) => {
+    const token = localStorage.getItem("token");
+    console.log("inside");
 
+    if (token) {
+      const cartItems: any = await cartService.deleteCartItems(token,id);
+      if(cartItems){
+        console.log(cartItems);
+        dispatch(getCartproducts());
+      }
+
+    } else {
+      console.log("inside2");
+      dispatch(removeCartProduct(id));
+    }
   };

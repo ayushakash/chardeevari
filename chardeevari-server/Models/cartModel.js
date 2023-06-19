@@ -2,11 +2,11 @@ const mongoose = require("mongoose");
 const { v4: uuid } = require("uuid");
 
 const cartItemSchema = new mongoose.Schema({
-    _id: {
-      type: String,
-      required: true,
-      default: uuid(),
-    },
+    // _id: {
+    //   type: String,
+    //   required: true,
+    //   default: uuid(),
+    // },
     product: {
       type: String,
       ref: "Product",

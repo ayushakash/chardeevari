@@ -49,19 +49,14 @@ export const signup = (signupData: any): ThunkAction<void, RootState, unknown, a
 
 export const logout = (): ThunkAction<void, RootState, unknown, any> => async (dispatch) => {
   try {
-    // Perform signup API call
-    const response = await authService.userLogout();
+    // Clear the token from local storage
+    window.localStorage.removeItem('token');
+    console.log('Token removed from local storage');
 
-    if (response) {
-      console.log(response)
-      // const data = await response.json();
-      // Dispatch success action
-      // dispatch(signupUser(data));
-    } else {
-      const error = await response.text();
-      // Dispatch failure action
-      dispatch({ type: 'auth/signupFailure', payload: error });
-    }
+    // You can perform any other necessary logout actions here
+
+    // Redirect to the login page or perform any other necessary actions
+    window.location.href = '/login';
   } catch (error) {
     // Dispatch failure action
     dispatch({ type: 'auth/signupFailure', payload: error });

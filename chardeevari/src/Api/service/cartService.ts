@@ -50,6 +50,31 @@ class CartService {
       }
     });
   }
+
+  deleteCartItems(token: any,productId:any) {
+    return new Promise(async (resolve, reject) => {
+      try {
+        const response = await fetch(`${config.API_BASEPATH}/cart/${productId}`, {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        console.log(response)
+
+        if (response.ok) {
+          const data = await response.json();
+          resolve(data); // Resolve with the response data
+        } else {
+          const error = await response.text();
+          reject(error); // Reject with the error message
+        }
+      } catch (error) {
+        reject(error); // Reject with the error object
+      }
+    });
+  }
 }
 
 const cartService = new CartService();

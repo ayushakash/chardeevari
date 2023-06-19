@@ -1,3 +1,4 @@
+import { FaSignOutAlt } from 'react-icons/fa';
 import { config } from '../../config';
 
 class AuthService {
@@ -65,22 +66,20 @@ class AuthService {
     });
   }
 
-  userLogout () :Promise<any> {
-    return new Promise (async(resolve,reject)=>{
-      try {
-        // Clear the token from local storage
-        localStorage.removeItem('token');
+  userLogout(): void {
+    try {
+      // Clear the token from local storage
+      localStorage.removeItem('token');
+      console.log('Token removed from local storage');
+      // You can perform any other necessary logout actions here
   
-        // Redirect to the login page or any other desired page
-        window.location.href = '/login';
-  
-        resolve("user Logged Out Sucessfully"); // Resolve without any data
-      } catch (error) {
-        reject(error); // Reject with the error object
-      }
-    })
+      // Resolve or perform any necessary actions after logout
+    } catch (error) {
+      console.error('Error while logging out:', error);
+      // Reject or handle the error as needed
+    }
   }
-
+  
 
 
 

@@ -143,4 +143,5 @@ blog link
 newsletter subscription box
 
 
-//next add ddelete from cart functionality it will ddedlete from the cart for login and non login user
+//next add delete from cart functionality it will delete from the cart for login and non login user
+//when user stops at a page then it should be captured to send notification and email

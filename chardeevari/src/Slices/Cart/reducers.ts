@@ -17,9 +17,11 @@ export const cartSlice = createSlice({
   reducers: { 
 
     addProductsLocally: (state, action) => {
+      console.log(action.payload);
       const updatedProducts = action.payload;
+
       updatedProducts.forEach((product:any) => {
-        const existingProductIndex = state.cartProducts.findIndex((p) => p.id === product.id);
+        const existingProductIndex = state.cartProducts.findIndex((p) => p._id === product._id);
         if (existingProductIndex !== -1) {
           state.cartProducts[existingProductIndex] = product; // update existing product
         } else {
@@ -31,30 +33,27 @@ export const cartSlice = createSlice({
       localStorage.setItem("cartProduct", JSON.stringify(state.cartProducts));
     },
 
-    addProductsRemote: (state, action) => {
-      const updatedProducts = action.payload;
-      updatedProducts.forEach((product:any) => {
-        const existingProductIndex = state.cartProducts.findIndex((p) => p.id === product.id);
-        if (existingProductIndex !== -1) {
-          state.cartProducts[existingProductIndex] = product; // update existing product
-        } else {
-          state.cartProducts.push(product); // add new product
-        }
-      });
-      // call the api to save the data `
-      
-      localStorage.setItem("cartProduct", JSON.stringify(state.cartProducts));
+    removeCartProduct: (state, action) => {
+      console.log(action.payload);
+      const productToDelete = action.payload;
+      const existingProductIndex = state.cartProducts.findIndex((p) => p._id === productToDelete);
+    
+      if (existingProductIndex !== -1) {
+        state.cartProducts.splice(existingProductIndex, 1); // Remove the product from the array
+        localStorage.setItem("cartProduct", JSON.stringify(state.cartProducts)); // Update local storage
+      }
     },
+    
 
 
-    getCartProducts: (state,action) => {
+    getCartProduct: (state,action) => {
       console.log(action.payload);
       state.cartProducts = action.payload
     }
   }
 });
 
-export const { addProductsLocally,getCartProducts,addProductsRemote } = cartSlice.actions;
+export const { addProductsLocally,getCartProduct,removeCartProduct } = cartSlice.actions;
 
 export const selectProduct = (state: RootState) => state.cart.cartProducts;
 

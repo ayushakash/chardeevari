@@ -1,4 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
+import { FaTrash} from "react-icons/fa";
 import style from "./Cart.module.scss";
 import { RootState } from "../../Store/rootReducer";
 import React, { useEffect, useState } from "react";
@@ -7,7 +8,7 @@ import { Rating } from "@mui/material";
 import StarIcon from "@mui/material/SvgIcon";
 import AddToCart from "../../Components/Button";
 import { useNavigate } from 'react-router-dom';
-import { addProduct, getCartproducts } from "../../Slices/Cart/thunk";
+import { addProduct, deleteCartproducts, getCartproducts } from "../../Slices/Cart/thunk";
 
 
 const Cart: React.FC<any> = () => {
@@ -36,6 +37,11 @@ const Cart: React.FC<any> = () => {
         </button>
       </li>
     );
+  }
+
+  const removeItem = (id:any) =>{
+    //add function to delete cart items 
+    dispatch(deleteCartproducts(id))
   }
 
   const onClickproceedToBuy = () => {
@@ -98,7 +104,7 @@ const Cart: React.FC<any> = () => {
             <div className="px-2">
               <b className="display-4" style={{fontWeight:"500"}}>Shopping cart</b>
               {(cartProducts) && cartProducts.map((product: any) => (
-                <div key={product.id}>
+                <div key={product._id}>
                   <div className="d-flex mt-2 justify-content-between">
                     <div
                       className="flex-grow-1 flex-shrink-0"
@@ -130,6 +136,7 @@ const Cart: React.FC<any> = () => {
                     Rs. {product.productPrice*product.quantity}
                     </div>
 
+                    <FaTrash size="15px" color="red" onClick={()=>removeItem(product._id)} />
                   </div>
                 </div>
               ))}

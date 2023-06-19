@@ -40,9 +40,8 @@ if (!hasFetched) { // Only make the API call if data has not been fetched
     }
   }, [dispatch, hasFetched]);
 
-  const cartProducts = useSelector(
-    (state: RootState) => state.product.cartProducts
-  );
+  const cartProducts = useSelector((state: RootState) => state.product.cartProducts);
+
   const handleProductAdditionCount = (cartProduct: any) => {
     let updatedProducts = [];
     const existingProduct = cartProducts.find(
@@ -52,7 +51,7 @@ if (!hasFetched) { // Only make the API call if data has not been fetched
     if (existingProduct) {
       const updatedProduct = {
         ...existingProduct,
-        orderCount: cartProduct.orderCount,
+        quantity: cartProduct.quantity,
       };
       updatedProducts.push(updatedProduct); //updating old product
     } else {

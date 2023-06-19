@@ -5,12 +5,7 @@ const addToCart = async (req, res) => {
   try {
     const userId = req.userId;    
     const { product, quantity } = req.body;
-
     let cartItem = await Cart.findOne({ product, userId });
-    console.log(cartItem);
-    
-    // If quantity is 0, remove the cart item from the database either it is there or not
-
     if (quantity === 0) {
         if (!cartItem) {
           return res.status(404).json({ message: "Cart item not found" });
@@ -38,15 +33,16 @@ const addToCart = async (req, res) => {
 const removeFromCart = async (req, res) => {
   try {
     const userId = req.userId;
-    const { product,quantity } = req.params;
-    console.log(product);
-    const cartItem = await Cart.findOne({ product, userId });
-    console.log(cartItem)
-    if (!cartItem) {
+    const { productId } = req.params;
+    console.log(productId);
+
+    const deletedItem = await Cart.deleteOne({userId:userId ,product:productId });
+    console.log(deletedItem)
+
+    if (!deletedItem) {
       return res.status(404).json({ message: "Cart item not found" });
     }
-
-    await cartItem.remove();
+    
     res.status(200).json({ message: "Cart item removed successfully" });
   } catch (error) {
     console.error("Error while removing cart item:", error);
