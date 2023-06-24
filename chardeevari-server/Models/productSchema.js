@@ -4,7 +4,6 @@ const productSchema = new mongoose.Schema({
   _id: {
     type: String,
     required: true,
-    default: uuid(),
   },
   productName: {
     type: String,

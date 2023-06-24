@@ -40,9 +40,9 @@ const Address = () => {
     <>
       <div className="mx-4">
         <h3>Select Address to Deliver</h3>
-        <button className={style.locationButton} onClick={handleGetLocation}>
+        {/* <button className={style.locationButton} onClick={handleGetLocation}>
           <FaMapMarker /> Get Current Location
-        </button>
+        </button> */}
         {addresses.length && <AddressComponent addresses={addresses} />}
         <button
           className={style.editButton}
