@@ -1,5 +1,6 @@
 const { connectMongoDb } = require('./connection');
 const express = require('express');
+const { graphqlHTTP } = require('express-graphql');
 const cors = require('cors');
 const productRouter = require('./routes/product');
 const authRouter = require('./routes/auth');
@@ -7,6 +8,10 @@ const addressRouter = require('./routes/address');
 const orderRouter = require('./routes/order');
 const merchantRouter = require('./routes/merchant');
 const cartRouter = require('./routes/cart');
+const { buildSchema } = require('graphql');
+const  schema  = require('./Models/graphqlSchema/productGraph');
+// const  root  = require('./graphql/mutation');
+
 require('dotenv').config();
 const  cookieParser = require('cookie-parser')
 
@@ -43,6 +48,7 @@ app.use('/address', addressRouter);
 app.use('/order', orderRouter);
 app.use('/merchant', merchantRouter);
 app.use('/cart', cartRouter);
+app.use('/graphql',graphqlHTTP({schema: schema, graphiql: true,}));
 
 
 // Start the server
